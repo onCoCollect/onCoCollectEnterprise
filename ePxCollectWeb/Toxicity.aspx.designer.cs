@@ -616,15 +616,6 @@ namespace ePxCollectWeb {
         protected global::System.Web.UI.WebControls.TextBox txtMoreToxicityValue;
         
         /// <summary>
-        /// Label19 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label19;
-        
-        /// <summary>
         /// lblError control.
         /// </summary>
         /// <remarks>

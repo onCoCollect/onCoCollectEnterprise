@@ -219,7 +219,7 @@
 
                         <table align="center" width="50%">
                             <tr>
-                                <td align="right" class="NewLabelRight">UserID&nbsp;
+                                <td align="right" class="NewLabelRight">User ID&nbsp;
                                 </td>
                                 <td align="left">
 
@@ -310,7 +310,7 @@
             </div>
             <div style="height: 270px;" id="divHeight" runat="server"></div>
             <div class="footer noborder">
-                Best viewed with Internet Explorer <span>All rights Reserved OncoCollect Enterprise<sup>TM</sup></span><%--Code modified on March 17-2015,Subhashini--%>
+               <span> All rights Reserved OncoCollect<sup>TM</sup> Enterprise</span><%--Code modified on March 17-2015,Subhashini--%>
             </div>
     </form>
 </body>

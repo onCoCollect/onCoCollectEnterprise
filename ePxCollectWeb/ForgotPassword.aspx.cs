@@ -136,6 +136,7 @@ namespace ePxCollectWeb
                             btncancel.Enabled = true;
                             //Code added by Subhashini March 17,2015
                             this.divChangePassword.Visible = true;
+                            divHeight.Attributes.Add("style", "height: 205px;");
                             // ModalPopupExtender2.Show();
                         }
                     }
@@ -155,7 +156,18 @@ namespace ePxCollectWeb
 
         protected void btncancel_Click(object sender, EventArgs e)
         {
-            Response.Redirect("Login.aspx", false);
+            if (divChangePassword.Visible == true)
+            {
+                divChangePassword.Visible = false;
+                txtUserId.Enabled = true;
+                ddlPasswordHintQuestion.Enabled = true;
+                txtAnswer.Enabled = true;
+                divHeight.Attributes.Add("style", "height: 270px;");
+            }
+            else
+            {
+                Response.Redirect("Login.aspx", false);
+            }
         }
 
         private void ClearControls()

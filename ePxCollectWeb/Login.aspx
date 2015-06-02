@@ -173,6 +173,16 @@
         }
     </script>
 <!--<![endif]-->
+     <script type="text/javascript">
+         function isNumber(evt) {
+             evt = (evt) ? evt : window.event;
+             var charCode = (evt.which) ? evt.which : evt.keyCode;
+             if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+                 return false;
+             }
+             return true;
+         }
+    </script>
 </head>
 
 <!--[if lt IE 9]>
@@ -193,8 +203,10 @@
                 <div class="front">
                     <div class="account-wall">
                         <p>
-                            <input id="txtUsrName" class="txtBx" placeholder="User ID" runat="server" maxlength="10" type="text" required autofocus /><span style="color: red">*</span>
+                            <input id="txtUsrName" class="txtBx" placeholder="User ID" runat="server" onkeypress="return isNumber(event)"  maxlength="10" type="text" required autofocus /><span style="color: red">*</span>
+                           
                             <input id="txtPasword" class="txtBx" placeholder="Password" runat="server" type="password" accesskey="*" required /><span style="color: red">*</span>
+                           
                         </p>
                         <p>
                             <asp:Button ID="submitLogin" CssClass="button" runat="server" Text="Sign in" OnClick="btnLogin_Click" />

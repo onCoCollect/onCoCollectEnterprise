@@ -217,7 +217,7 @@
 
                                             <td align="left">
                                                 <asp:ListBox ID="lstLinesMoreToxicity" runat="server" Width="300px" Height="100px" CssClass="dllCss" SelectionMode="Single"></asp:ListBox>
-                                                &nbsp;&nbsp;<asp:Label runat="server" ID="Label17" Text="*" ForeColor="Red"></asp:Label>
+                                                <asp:Label runat="server" ID="Label17" Text="*" ForeColor="Red"></asp:Label>
 
                                             </td>
                                         </tr>
@@ -227,7 +227,7 @@
                                                 <asp:DropDownList ID="ddlToxicity" runat="server" OnSelectedIndexChanged="lstLinesMoreToxicity_SelectedIndexChanged"
                                                     Width="300px">
                                                 </asp:DropDownList>
-                                                &nbsp;&nbsp;<asp:Label runat="server" ID="Label18" Text="*" ForeColor="Red"></asp:Label>
+                                                <asp:Label runat="server" ID="Label18" Text="*" ForeColor="Red"></asp:Label>
 
                                             </td>
 
@@ -244,7 +244,6 @@
                                             <td align="left">
                                                 <asp:TextBox ID="txtMoreToxicityValue" runat="server" Height="100px" Width="300px" CssClass="txtBox" ReadOnly="true"
                                                     TextMode="MultiLine"></asp:TextBox>
-                                                &nbsp;&nbsp;<asp:Label runat="server" ID="Label19" Text="*" ForeColor="Red"></asp:Label>
 
                                             </td>
 
