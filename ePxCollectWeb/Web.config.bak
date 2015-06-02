@@ -1,0 +1,113 @@
+﻿<?xml version="1.0"?>
+<!--
+  For more information on how to configure your ASP.NET application, please visit
+  http://go.microsoft.com/fwlink/?LinkId=169433
+  -->
+<configuration>
+  <appSettings>
+    <add key="secssionCounter" value="2"/>
+    <add key="recordCouner" value="100"/>
+    <add key="fileMinLength" value="3"/>
+    <add key="patientMinLength" value="4"/>
+    <add key="ChartImageHandler" value="storage=file;timeout=20;dir=c:\TempImageFiles\;"/>
+    <add key="Backup" value="OCollectEnterprise"/>
+    <add key="GridSize" value="10,20,30"/>
+    <add key="Search" value="1"/>
+    <add key="SearchMax" value="15"/>
+    <add key="CommandTimeOut" value="10000"/>
+    <add key="RowCount" value="1000"/>
+    <add key="EnterpriseDatabase" value="N8y1dJx/90hFdYhARmgzlsuF+/bMJ7W5sFq4VDO/cII="/>
+    <add key="SessionForcetoExpired" value="30"/>
+     <add key="StudyDB" value="Server=localhost;Database=OncoCollectStudy;User ID=sa;Password=admin123;"/>
+    <!-- CBS DataBase Test-->
+    <!--<add key="EnterpriseDatabase" value="N8y1dJx/90hFdYhARmgzlsuF+/bMJ7W5sFq4VDO/cII="/>-->
+    <!-- local-->
+    <!--<add key="EnterpriseDatabase" value="RD/wOPTX6IG2t0VjuSaarA=="/>-->
+    <!-- CBS DataBase Stress-->
+    <!--<add key="EnterpriseDatabase" value="N8y1dJx/90hFdYhARmgzlgjDSLwYllnsRs7sL28NS6o="/>-->
+
+  </appSettings>
+  <connectionStrings>
+     <!--Local DataBse OncoJn19 Admin-->
+
+    <!--<add name="OncoCollectEnterprise" connectionString="55HI8QRbdTWZhjL4oJz+CApZsNwIs/WzBFsiMwU4XNltIqo6Eo7wppbGy1/5guqovMnEFlAzjXVjF8lLSQTV11CMD0zP0jfwobiJyeS/eX5IajEOL2GyVxhjj+B0n4zs" providerName="System.Data.SqlClient"/>
+    <add name="OncoCollectAudit" connectionString="55HI8QRbdTWZhjL4oJz+CApZsNwIs/WzBFsiMwU4XNldJNFhUHGbtLMNZvT6asshVCqw4WokaaaphcLirSe0zfXXInS1jvedTO9iGXt0mcMwRSgThraP6oye0Ip8SFAx" providerName="System.Data.SqlClient"/>-->
+
+    <add name="OncoCollectEnterprise" connectionString="55HI8QRbdTWZhjL4oJz+CApZsNwIs/WzBFsiMwU4XNltIqo6Eo7wppbGy1/5guqovMnEFlAzjXVjF8lLSQTV11CMD0zP0jfwobiJyeS/eX5IajEOL2GyVxhjj+B0n4zs" providerName="System.Data.SqlClient"/>
+    <add name="OncoCollectAudit" connectionString="55HI8QRbdTWZhjL4oJz+CApZsNwIs/WzBFsiMwU4XNldJNFhUHGbtLMNZvT6asshVCqw4WokaaaphcLirSe0zfXXInS1jvedTO9iGXt0mcMwRSgThraP6oye0Ip8SFAx" providerName="System.Data.SqlClient"/>
+
+    <!-- CBS DataBase Test-->
+    <!--<add name="OncoCollectEnterprise" connectionString="I99gz8+lfl4f/YuIFFHmz5hgQE9fRzNo3Ext6p8Q67rWebwx8per/DtdaBK6wqdFq1BCXXsDviQtJb3DENb9EVGH+98Go4vF1Ave6WE7mwg1T31Gvk/uXzxyK76fLM7Y" providerName="System.Data.SqlClient"/>
+    <add name="OncoCollectAudit" connectionString="I99gz8+lfl4f/YuIFFHmz69cESuTF4Jb+92bQwKNRwhIYpQbZ7W4J4rzTOsE34br0rgTGoGLk9JJLE3Rax63Xw6I3o/Bpn6qO6E1cIQvAXM=" providerName="System.Data.SqlClient"/>-->
+
+
+    <!--CBS DataBase Developement-->
+    <!--<add name="OncoCollectEnterprise" connectionString="I99gz8+lfl4f/YuIFFHmz5hgQE9fRzNo3Ext6p8Q67onhBXdnVmPWGkqw227Ntk3vWyH8GLW56gfQ2KgA8fQxX1dtEIJHbuOYjrjKslybqe2nAXTYPCzcZ7xgZL3rL6e" providerName="System.Data.SqlClient"/>
+    <add name="OncoCollectAudit" connectionString="I99gz8+lfl4f/YuIFFHmz7c5vO4h7q8PqI+0TVeKCBm9p+WL/TMY5rD3XbNnH+hal8iB0ECghaOJpVRbQs7iRI3aX+TM3NIssgqtFDSvVdI=" providerName="System.Data.SqlClient"/>-->
+
+    <!--CBS DataBase Stress Testing-->
+    <!--<add name="OncoCollectEnterprise" connectionString="I99gz8+lfl4f/YuIFFHmz5hgQE9fRzNo3Ext6p8Q67pMVFxlhHa3EoX8WJsGDOIm8HdlqlhrFQ3ZkvBfuoWHcsA9i2Ty9MV7X7fHrCTF7tLu+HfxvG/AKCkhet/CowFF" providerName="System.Data.SqlClient"/>
+    <add name="OncoCollectAudit" connectionString="I99gz8+lfl4f/YuIFFHmz7c5vO4h7q8PqI+0TVeKCBm9p+WL/TMY5rD3XbNnH+hal8iB0ECghaOJpVRbQs7iRI3aX+TM3NIssgqtFDSvVdI=" providerName="System.Data.SqlClient"/>-->
+
+
+
+  </connectionStrings>
+
+  <system.web>
+    <httpRuntime executionTimeout="100000" maxRequestLength="214748364" />
+    <customErrors mode="RemoteOnly"></customErrors>
+    <sessionState mode="InProc" timeout="20" cookieless="false"/>
+    <compilation debug="true" targetFramework="4.0">
+      <assemblies>
+        <add assembly="System.Design, Version=4.0.0.0, Culture=neutral, PublicKeyToken=B03F5F7F11D50A3A"/>
+      </assemblies>
+    </compilation>
+    <authentication mode="Forms">
+      <forms loginUrl="Login.aspx" timeout="2880"/>
+    </authentication>
+    <membership>
+      <providers>
+        <clear/>
+        <add name="AspNetSqlMembershipProvider" type="System.Web.Security.SqlMembershipProvider" connectionStringName="ApplicationServices" enablePasswordRetrieval="false" enablePasswordReset="true" requiresQuestionAndAnswer="false" requiresUniqueEmail="false" maxInvalidPasswordAttempts="5" minRequiredPasswordLength="6" minRequiredNonalphanumericCharacters="0" passwordAttemptWindow="10" applicationName="/"/>
+      </providers>
+    </membership>
+    <profile>
+      <providers>
+        <clear/>
+        <add name="AspNetSqlProfileProvider" type="System.Web.Profile.SqlProfileProvider" connectionStringName="ApplicationServices" applicationName="/"/>
+      </providers>
+    </profile>
+    <roleManager enabled="false">
+      <providers>
+        <clear/>
+        <add name="AspNetSqlRoleProvider" type="System.Web.Security.SqlRoleProvider" connectionStringName="ApplicationServices" applicationName="/"/>
+        <add name="AspNetWindowsTokenRoleProvider" type="System.Web.Security.WindowsTokenRoleProvider" applicationName="/"/>
+      </providers>
+    </roleManager>
+
+    <pages controlRenderingCompatibilityVersion="3.5" clientIDMode="AutoID" enableSessionState="true">
+      <controls>
+        <add tagPrefix="ajaxToolkit" assembly="AjaxControlToolkit" namespace="AjaxControlToolkit"/>
+        <add tagPrefix="asp" namespace="Saplin.Controls" assembly="DropDownCheckBoxes"/>
+      </controls>
+    </pages>
+  </system.web>
+  <system.webServer>
+    <modules runAllManagedModulesForAllRequests="true">
+      <remove name="Session" />
+      <add name="Session" type="System.Web.SessionState.SessionStateModule"/>
+    </modules>
+  </system.webServer>
+  <runtime>
+    <assemblyBinding xmlns="urn:schemas-microsoft-com:asm.v1">
+      <dependentAssembly>
+        <assemblyIdentity name="Microsoft.WindowsAzure.Storage" publicKeyToken="31bf3856ad364e35" culture="neutral"/>
+        <bindingRedirect oldVersion="0.0.0.0-2.1.0.4" newVersion="2.1.0.4"/>
+      </dependentAssembly>
+    </assemblyBinding>
+  </runtime>
+
+</configuration>
+
+
+

@@ -1,0 +1,261 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+using System.Data;
+using ePxCollectDataAccess;
+
+namespace ePxCollectWeb
+{
+    public partial class Stats : System.Web.UI.Page
+    {
+        protected void Page_Load(object sender, EventArgs e)
+        {
+            if (Convert.ToString(Session["Login"]) == "")
+            {
+                Response.Redirect("login.Aspx");
+            }
+            if (!IsPostBack)
+            {
+                string strSQL = GlobalValues.QueryString;
+                string inCheckString = string.Empty;
+                string strInClause = string.Empty;
+                string[] strTabCol = strSQL.Split(',');
+                for (int i = 0; i <= strTabCol.Length - 1; i++)
+                {
+                    //string[] strCols =strTabCol[i].Split('.');
+                    inCheckString += "'" + strTabCol[i].Trim() + "'" + ",";
+                  //strInClause += ",'" + strCols[1].Replace("[", "").Replace("]", "") + "'";
+                }
+                strInClause = inCheckString.Substring(0, inCheckString.Length - 1);//.Join.Substring(strInClause - 1);
+                strSQL = "Select [Field Name] as FieldName  from PDFields where [field Name] in ( " + strInClause + " ) and [dataType] in ('Int','Long', 'Double') and [Patient Identity Field]=0";
+                DataSet ds = new DataSet();
+                ds = GlobalValues.ExecuteDataSet(strSQL);
+                DataRow dr = ds.Tables[0].NewRow();
+                dr[0] = "";
+                ds.Tables[0].Rows.InsertAt(dr, 0);
+                dlstColumns.DataSource = ds;
+                dlstColumns.DataTextField = "FieldName";
+                dlstColumns.DataValueField = "FieldName";
+                dlstColumns.DataBind();
+            }
+        }
+
+        protected void dlstColumns_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            mathCaluculations();
+            //var sqlQuery = "Select Count(*) from PatientDetails ";
+            //var totalRecords = (int)GlobalValues.ExecuteScalar(sqlQuery);
+
+            //var strWhere = " Where " + Convert.ToString(Session["Whr" + Session.SessionID.ToString()]); ;
+
+            //var column = dlstColumns.Text.ToString();
+
+            //var SqlStr = "Select [" + column + "]" +
+            //          GlobalValues.glbFromClause +
+            //          strWhere + "  [" + column + "] >0 order by [" + column + "]";
+
+            ////Fetch records
+            //var ds = GlobalValues.ExecuteDataSet(SqlStr);
+
+            //var lst = new List<double>();
+
+            //if(ds.Tables[0].Rows.Count !=0)
+            //{ 
+            ////Convert to List
+
+            //foreach (DataRow row in ds.Tables[0].Rows)
+            //{
+            //    lst.Add(double.Parse(row[column].ToString()));
+
+            //  //  lst.Add((double)row[0]);
+               
+            //}
+
+            //if (rdAnalysisType.SelectedIndex == 0)
+            //{
+            //    var mean = lst.Mean().ToString();
+
+              
+            //    var rngstart = lst[0].ToString();
+            //    lblMeanMed.Text = " Mean = " + mean; 
+            //    var rngEnd = lst[lst.Count - 1].ToString();
+            //   // lblNoRecs.Text = "No. of Records Considered = " + ds.Tables[0].Rows.Count.ToString();
+            //    lblNoRecs.Text = "No. of Records Considered = " + ds.Tables[0].Rows.Count.ToString();
+            //    lblTotal.Text = totalRecords.ToString();
+            //    LblRange.Text = "Range = " + rngstart.ToString() + " - " + rngEnd.ToString();
+            //    lblRecsIgnored.Text = "Records Ignored (no values) = " + (totalRecords - ds.Tables[0].Rows.Count).ToString(); 
+
+                
+            //}
+            //else
+            //{
+            //    var median = lst.Median().ToString();
+            //    var rngstart = lst[0].ToString();
+            //    lblMeanMed.Text = " Median = " + median;
+            //    var rngEnd = lst[lst.Count - 1].ToString();
+            //    lblNoRecs.Text = "No. of Records Considered = " + ds.Tables[0].Rows.Count.ToString();
+            //    lblTotal.Text = totalRecords.ToString();
+            //    LblRange.Text = "Range = " + rngstart.ToString() + " - " + rngEnd.ToString();
+            //    lblRecsIgnored.Text = "Records Ignored (no values) = " + (totalRecords - ds.Tables[0].Rows.Count).ToString(); 
+            //}
+            //}
+          
+           
+
+            //var median = lst.Median().ToString();
+            //var mean = lst.Mean().ToString();
+         
+
+       //   string SqlStr = string.Empty;
+       //   string strSQLConnection = GlobalValues.QueryString;
+       // string strWhere = " Where " + Convert.ToString(Session["Whr" + Session.SessionID.ToString()]);// Convert.ToString(Request.QueryString["Whr"]);
+       //   int totalRecords = 0;
+       //int RecConsid = 0;
+       //     //SqlStr = "Select Count(*) from PatientDetails " + strWhere;
+       //     //totalRecords = (int)GlobalValues.ExecuteScalar(SqlStr);
+            
+       //     //if (totalRecords == null) { totalRecords = 0; }
+
+       //     SqlStr = "Select Count([" + dlstColumns.Text.ToString() + "]) " + GlobalValues.glbFromClause + strWhere + "  [" + dlstColumns.Text.ToString() + "] >0";
+
+       //     RecConsid = (int)GlobalValues.ExecuteScalar(SqlStr);
+       //     string SqlStrRecords = "Select [" + dlstColumns.Text.ToString() + "] " + GlobalValues.glbFromClause + strWhere + "  [" + dlstColumns.Text.ToString() + "] >0";
+          
+         
+            
+       //     if (RecConsid == null) { RecConsid = 0; }
+       //     lblTotal.Text = totalRecords.ToString();
+       //     lblNoRecs.Text = "No. of Records Considered = " + RecConsid.ToString();
+       //     lblRecsIgnored.Text = "Records Ignored (no values) = " + (totalRecords - RecConsid).ToString();
+       //     if (rdAnalysisType.SelectedIndex == 0)
+       //     {
+       //         SqlStr = "Select Round(isnull(Avg([" + dlstColumns.Text.ToString() + "]),0),0)  " + GlobalValues.glbFromClause + strWhere + "  [" + dlstColumns.Text.ToString() + "] >0";
+       //         RecConsid = (int)GlobalValues.ExecuteScalar(SqlStr);
+       //         if (RecConsid == null) { RecConsid = 0; }
+       //         lblMeanMed.Text = " Mean = " + RecConsid.ToString();
+       //     }
+       //     else
+       //     {
+              
+
+       //         lblMeanMed.Text = " Median = Not Calculated select  round ( count([PFS3]) * 0.5,0 ) FROM (((((((((((PatientDetails_0 INNER JOIN PatientDetails_1 ON PatientDetails_0.PatientID = PatientDetails_1.Patient) INNER JOIN PatientDetails_2 ON PatientDetails_0.PatientID = PatientDetails_2.Patient) INNER JOIN PatientDetails_3 ON PatientDetails_0.PatientID = PatientDetails_3.Patient) INNER JOIN PatientDetails_4 ON PatientDetails_0.PatientID = PatientDetails_4.Patient) INNER JOIN PatientDetails_5 ON PatientDetails_0.PatientID = PatientDetails_5.Patient) INNER JOIN PatientDetails_6 ON PatientDetails_0.PatientID = PatientDetails_6.Patient) INNER JOIN PatientDetails_7 ON PatientDetails_0.PatientID = PatientDetails_7.Patient) INNER JOIN PatientDetails_8 ON PatientDetails_0.PatientID = PatientDetails_8.Patient) INNER JOIN PatientDetails_9 ON PatientDetails_0.PatientID = PatientDetails_9.Patient) LEFT JOIN Recurrences ON PatientDetails_0.PatientID = Recurrences.PatientID) INNER JOIN PatientDetails_10 ON PatientDetails_0.PatientID = PatientDetails_10.Patient) INNER JOIN PatientDetails_11 ON PatientDetails_0.PatientID = PatientDetails_11.Patient  Where   [PFS3] >0";
+       //     }
+       //     SqlStr = "Select isnull(Min([" + dlstColumns.Text.ToString() + "]),0)  " + GlobalValues.glbFromClause + strWhere + "  [" + dlstColumns.Text.ToString() + "] >0";
+       //     int MinVal = (int)GlobalValues.ExecuteScalar(SqlStr);
+       //     if (MinVal == null) { MinVal = 0; }
+       //     SqlStr = "Select isnull( Max([" + dlstColumns.Text.ToString() + "]),0) " + GlobalValues.glbFromClause + strWhere + "  [" + dlstColumns.Text.ToString() + "] >0";
+       //     int MaxVal = (int)GlobalValues.ExecuteScalar(SqlStr);
+       //     if (MaxVal == null) { MaxVal = 0; }
+       //     LblRange.Text = "Range = " + MinVal.ToString() + " - " + MaxVal.ToString();
+        }
+
+        protected void rdAnalysisType_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            mathCaluculations();
+        }
+
+
+        public void mathCaluculations()
+        {
+            var column = dlstColumns.Text.ToString();
+            if (column != "")
+            {
+
+
+
+                var sqlQuery = "Select Count(*) from PatientDetails ";
+                var totalRecords = (int)GlobalValues.ExecuteScalar(sqlQuery);
+
+                var strWhere = " Where " + Convert.ToString(Session["Whr" + Session.SessionID.ToString()]); ;
+
+                column = dlstColumns.Text.ToString();
+
+                var SqlStr = "Select [" + column + "]" +
+                          GlobalValues.glbFromClause +
+                          strWhere + "  [" + column + "] >0 order by [" + column + "]";
+
+                //Fetch records
+                var ds = GlobalValues.ExecuteDataSet(SqlStr);
+
+                var lst = new List<double>();
+
+                if (ds.Tables[0].Rows.Count != 0)
+                {
+                    //Convert to List
+
+                    foreach (DataRow row in ds.Tables[0].Rows)
+                    {
+                        lst.Add(double.Parse(row[column].ToString()));
+
+                        //  lst.Add((double)row[0]);
+
+                    }
+
+                    if (rdAnalysisType.SelectedIndex == 0)
+                    {
+                        var mean = lst.Mean().ToString();
+                        int meanValue = Convert.ToInt32(mean);
+
+                        var rngstart = lst[0].ToString();
+                        lblMeanMed.Text = " Mean = " + meanValue;
+                        var rngEnd = lst[lst.Count - 1].ToString();
+                        // lblNoRecs.Text = "No. of Records Considered = " + ds.Tables[0].Rows.Count.ToString();
+                        lblNoRecs.Text = "No. of Records Considered = " + ds.Tables[0].Rows.Count.ToString();
+                        lblTotal.Text = totalRecords.ToString();
+                        LblRange.Text = "Range = " + rngstart.ToString() + " - " + rngEnd.ToString();
+                        lblRecsIgnored.Text = "Records Ignored (no values) = " + (totalRecords - ds.Tables[0].Rows.Count).ToString();
+
+
+                    }
+                    else
+                    {
+                        var median = lst.Median().ToString();
+                        int medianValue = Convert.ToInt32(median);
+                        var rngstart = lst[0].ToString();
+                        lblMeanMed.Text = " Median = " + medianValue;
+                        var rngEnd = lst[lst.Count - 1].ToString();
+                        lblNoRecs.Text = "No. of Records Considered = " + ds.Tables[0].Rows.Count.ToString();
+                        lblTotal.Text = totalRecords.ToString();
+                        LblRange.Text = "Range = " + rngstart.ToString() + " - " + rngEnd.ToString();
+                        lblRecsIgnored.Text = "Records Ignored (no values) = " + (totalRecords - ds.Tables[0].Rows.Count).ToString();
+                    }
+                }
+                else
+                {
+                    lblTotal.Text = string.Empty;
+                    if (rdAnalysisType.SelectedIndex == 0)
+                    {
+                        lblMeanMed.Text = " Mean  = " + string.Empty;
+                    }
+                    else
+                    {
+                        lblMeanMed.Text = " Median  = " + string.Empty;
+                    }
+                    lblNoRecs.Text = string.Empty;
+                    lblRecsIgnored.Text = "Records Ignored (no values) = " + string.Empty;
+                    lblNoRecs.Text = "No. of Records Considered = " + string.Empty;
+                    LblRange.Text = "Range = " + string.Empty;
+                }
+            }
+            else
+            {
+                lblTotal.Text = string.Empty;
+                if (rdAnalysisType.SelectedIndex ==0)
+                { 
+                  lblMeanMed.Text =" Mean  = "+ string.Empty;
+                }
+                else
+                {
+                    lblMeanMed.Text = " Median  = " + string.Empty;
+                }
+                lblNoRecs.Text = string.Empty;
+                lblRecsIgnored.Text = "Records Ignored (no values) = " + string.Empty;
+                lblNoRecs.Text = "No. of Records Considered = " + string.Empty;
+                LblRange.Text = "Range = " + string.Empty;
+            }
+        }
+    }
+}

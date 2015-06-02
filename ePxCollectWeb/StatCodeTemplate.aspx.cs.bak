@@ -1,0 +1,1054 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+using ePxCollectDataAccess;
+using System.Data;
+
+
+namespace ePxCollectWeb
+{
+    public partial class StatCodeTemplate : System.Web.UI.Page
+    {
+        String connectionString = GlobalValues.strConnString;
+
+        protected void Page_Load(object sender, EventArgs e)
+        {
+            ViewState["PreviousPage"] = Request.UrlReferrer;
+            if (Convert.ToString(Session["Login"]) == "")
+            {
+                Response.Redirect("login.Aspx");
+            }
+
+            if (!IsPostBack)
+            {
+                ddlTemplateNames.Enabled = false;
+                bindCretedTemplate();
+                bindFields();
+                bindGroupNames();
+                ddlSelectTemplate.Enabled = true;
+                //Panel3.Visible = false;
+            }
+            pnlConfirm.Style.Value = "display:none;";
+            ddlSelectTemplate.Enabled = true;
+            //  FieldValues.Show();
+        }
+
+
+        public void bindValues()
+        {
+            string txtvalue = txtValue.Text;
+            string templateName = ddlSelectTemplate.SelectedItem.Text;
+            string strSelectedFieldName = ddlField.SelectedItem.Text;
+            string userName = Convert.ToString(Session["Login"]);
+            List<string> rowValue = new List<string>();
+            var recCount = "select  count(*) from tblStatTemplates where  UserID='" + userName + "'";
+            var countRecord = GlobalValues.ExecuteDataSet(recCount);
+            lblMessage.Visible = false;
+            chkList.Items.Clear();
+            if (countRecord.Tables[0].Rows[0][0].Equals(0))
+            {
+                var strSql = "Select  isnull([Table Name],'') TableName from PDFields where [Field Name]='" + ddlField.SelectedItem.Text.ToString().Trim() + "'";
+                string TableName = (string)GlobalValues.ExecuteScalar(strSql);
+                if (TableName == null) { TableName = ""; }
+
+                // strSql = "Select distinct [" + ddlField.SelectedItem.Text.ToString().Trim() + "] from " + TableName.ToString() + " where [" + ddlField.SelectedItem.Text.ToString().Trim() + "] is not null";
+                //  DataSet dsResult = new DataSet();
+                string strSqlValues = "Select  isnull(FieldValues,'') FieldValues from PDFields where [Field Name]='" + ddlField.SelectedItem.Text.ToString().Trim() + "'";
+                string ColNames = (string)GlobalValues.ExecuteScalar(strSqlValues);
+                string[] Cols = ColNames.Split(',');
+                if (ColNames == null) { ColNames = ""; }
+                if (ColNames.Length > 0)
+                {
+                    for (int i = 0; i < Cols.Length; i++)
+                    {
+                        if (Cols[i].ToString() != "")
+                        {
+                            chkList.Items.Add(Cols[i].ToString().Trim());
+                        }
+                    }
+                }
+
+
+
+            }
+            else
+            {
+                var selectValues = "select  [stat_TemplateName],stat_FieldName,stat_Value from [tblStatTemplates] where [stat_TemplateName] ='" + templateName.Trim() + "' and  UserID='" + userName + "'";
+                var valuesSet = SqlHelper.ExecuteDataset(connectionString, System.Data.CommandType.Text, selectValues);
+                chkList.Items.Clear();
+                if (valuesSet.Tables[0].Rows.Count == 0)
+                {
+
+                    string strSql = "Select  isnull(FieldValues,'') FieldValues from PDFields where [Field Name]='" + ddlField.SelectedItem.Text.ToString().Trim() + "'";
+                    string ColNames = (string)GlobalValues.ExecuteScalar(strSql);
+                    if (ColNames == null) { ColNames = ""; }
+                    if (ColNames.Length > 0)
+                    {
+                        string[] Cols = ColNames.Split(',');
+
+                        for (int iText = 0; iText < Cols.Length; iText++)
+                        {
+                            if (Cols[iText].ToString() != "")
+                            {
+
+
+                                chkList.Items.Add(Cols[iText].ToString());
+                            }
+
+                        }
+
+
+                    }
+                }
+                else
+                {
+
+
+                    chkList.Items.Clear();
+
+                    for (int rowCount = 0; rowCount < valuesSet.Tables[0].Rows.Count; rowCount++)
+                    {
+                        // List<string> rowValue = new List<string> ();
+                        rowValue.Add(valuesSet.Tables[0].Rows[rowCount][2].ToString().Trim());
+
+                    }
+
+
+                    for (int index = 0; index < valuesSet.Tables[0].Rows.Count; index++)
+                    {
+                        if (templateName.Trim() == valuesSet.Tables[0].Rows[index][0].ToString().Trim())
+                        {
+
+                            if (strSelectedFieldName.Trim() == valuesSet.Tables[0].Rows[index][1].ToString().Trim())
+                            {
+                                //Panel3.Visible = true;
+                                chkList.Items.Clear();
+                                // txtValue.Text = "";
+                                string strSql = "Select  isnull(FieldValues,'') FieldValues from PDFields where [Field Name]='" + ddlField.SelectedItem.Text.ToString().Trim() + "'";
+                                string ColNames = (string)GlobalValues.ExecuteScalar(strSql);
+                                if (ColNames == null) { ColNames = ""; }
+                                if (ColNames.Length > 0)
+                                {
+                                    string[] Cols = ColNames.Split(',');
+
+                                    string[] txt = txtValue.Text.Trim().Split(',');
+                                    List<string> txtStrings = new List<string>();
+                                    for (int txtIndex = 0; txtIndex < txt.Length; txtIndex++)
+                                    {
+                                        if (txt[txtIndex].ToString() != "")
+                                        {
+                                            txtStrings.Add(txt[txtIndex].ToString().Trim());
+                                        }
+
+                                    }
+
+                                    //   string[] Cols = ColNames.Split(',');
+                                    string sqlQuery = " select stat_value from tblStatTemplates where stat_TemplateName='" + templateName.Trim() + "' and stat_FieldName='" + ddlField.SelectedItem.Text.ToString().Trim() + "' ";
+                                    var dsResult = GlobalValues.ExecuteDataSet(sqlQuery);
+                                    List<string> existedList = new List<string>();
+
+                                    for (int lstIndex = 0; lstIndex < dsResult.Tables[0].Rows.Count; lstIndex++)
+                                    {
+                                        if (dsResult.Tables[0].Rows[lstIndex][0].ToString().Trim().Length > 0)
+                                        {
+                                            string[] dbvalues = dsResult.Tables[0].Rows[lstIndex][0].ToString().Trim().Split(',');
+
+                                            for (int dbIndex = 0; dbIndex < dbvalues.Length; dbIndex++)
+                                            {
+                                                if (dbvalues[dbIndex].ToString().Trim() != "")
+                                                {
+                                                    existedList.Add(dbvalues[dbIndex].ToString().Trim());
+                                                }
+                                            }
+                                        }
+                                        else
+                                        {
+                                            existedList.Add(dsResult.Tables[0].Rows[lstIndex][0].ToString().Trim());
+                                        }
+                                    }
+
+                                    for (int colIndex = 0; colIndex < Cols.Length; colIndex++)
+                                    {
+                                        if (existedList.Contains(Cols[colIndex].ToString().Trim()))
+                                        {
+
+                                        }
+                                        else
+                                        {
+                                            if (Cols[colIndex].ToString() != "")
+                                            {
+                                                chkList.Items.Add(Cols[colIndex].ToString().Trim());
+                                            }
+                                        }
+
+                                    }
+
+
+
+                                    //////
+
+                                    if (ViewState["flag"] != null)
+                                    {
+                                        if (ViewState["flag"].ToString() == "Edit")
+                                        {
+                                            chkList.Items.Clear();
+                                            if (txtValue.Text.Length > 1)
+                                            {
+                                                for (int iVal = 0; iVal < Cols.Length; iVal++)
+                                                {
+                                                    if (Cols[iVal].ToString() != "")
+                                                    {
+                                                        chkList.Items.Add(Cols[iVal].ToString().Trim());
+                                                    }
+                                                }
+                                                for (int y = 0; y < txtStrings.Count; y++)
+                                                {
+                                                    if (txtStrings.Contains(chkList.Items[y].ToString().Trim()))
+                                                    {
+
+                                                        chkList.Items[y].Selected = true;
+                                                    }
+
+                                                }
+                                            }
+                                            else
+                                            {
+                                                if (txtValue.Text != "")
+                                                {
+                                                    chkList.Items.Add(txtValue.Text);
+                                                }
+                                            }
+
+
+
+
+
+
+
+
+                                        }
+                                    }
+
+
+                                }
+                                else
+                                {
+                                    strSql = "Select  isnull([Table Name],'') TableName from PDFields where [Field Name]='" + ddlField.SelectedItem.Text.ToString().Trim() + "'";
+                                    string TableName = (string)GlobalValues.ExecuteScalar(strSql);
+                                    if (TableName == null) { TableName = ""; }
+                                    //  chkList.Items.Clear();
+                                    strSql = "Select distinct [" + ddlField.SelectedItem.Text.ToString().Trim() + "] from " + TableName.ToString() + " where [" + ddlField.SelectedItem.Text.ToString().Trim() + "] is not null";
+                                    //  DataSet dsResult = new DataSet();
+                                    var dsResult = GlobalValues.ExecuteDataSet(strSql);
+                                    DataTable dt = dsResult.Tables[0];
+                                    for (int i = 0; i < dsResult.Tables[0].Rows.Count; i++)
+                                    {
+
+                                        if (dsResult.Tables[0].Rows[i][0].ToString() != "")
+                                        {
+                                            chkList.Items.Add(dsResult.Tables[0].Rows[i][0].ToString());
+
+                                        }
+                                        //}
+                                    }
+
+
+
+
+
+
+                                }
+                            }
+                            else if (strSelectedFieldName.Trim() != valuesSet.Tables[0].Rows[index][1].ToString().Trim())
+                            {
+
+                                chkList.Items.Clear();
+                                //  txtValue.Text = "";
+                                string strSql = "Select  isnull(FieldValues,'') FieldValues from PDFields where [Field Name]='" + ddlField.SelectedItem.Text.ToString().Trim() + "'";
+                                string ColNames = (string)GlobalValues.ExecuteScalar(strSql);
+                                if (ColNames == null) { ColNames = ""; }
+
+                                string[] ColsNames = ColNames.Split(',');
+                                if (ViewState["flag"] == null)
+                                {
+                                    if (ViewState["flag"] != "Edit")
+                                    {
+                                        for (int i = 0; i < ColsNames.Length; i++)
+                                        {
+                                            if (ColsNames[i].ToString() != "")
+                                            {
+                                                chkList.Items.Add(ColsNames[i].ToString());
+                                            }
+                                        }
+                                    }
+
+
+
+
+                                }
+                                else
+                                {
+
+
+                                    string[] Cols = ColNames.Split(',');
+                                    string sqlQuery = " select stat_value from tblStatTemplates where stat_TemplateName='" + templateName.Trim() + "' and stat_FieldName='" + ddlField.SelectedItem.Text.ToString().Trim() + "' ";
+                                    var dsResult = GlobalValues.ExecuteDataSet(sqlQuery);
+                                    List<string> existedList = new List<string>();
+
+                                    for (int lstIndex = 0; lstIndex < dsResult.Tables[0].Rows.Count; lstIndex++)
+                                    {
+                                        if (dsResult.Tables[0].Rows[lstIndex][0].ToString().Trim().Length > 0)
+                                        {
+                                            string[] dbvalues = dsResult.Tables[0].Rows[lstIndex][0].ToString().Trim().Split(',');
+
+                                            for (int dbIndex = 0; dbIndex < dbvalues.Length; dbIndex++)
+                                            {
+                                                if (dbvalues[dbIndex].ToString().Trim() != "")
+                                                {
+                                                    existedList.Add(dbvalues[dbIndex].ToString().Trim());
+                                                }
+                                            }
+                                        }
+                                        else
+                                        {
+                                            existedList.Add(dsResult.Tables[0].Rows[lstIndex][0].ToString().Trim());
+                                        }
+                                    }
+
+                                    for (int colIndex = 0; colIndex < Cols.Length; colIndex++)
+                                    {
+                                        if (existedList.Contains(Cols[colIndex].ToString().Trim()))
+                                        {
+
+                                        }
+                                        else
+                                        {
+                                            if (Cols[colIndex].ToString().Trim() != "")
+                                            {
+                                                chkList.Items.Add(Cols[colIndex].ToString().Trim());
+                                            }
+                                        }
+
+                                    }
+                                }
+                            }
+
+
+
+                        }
+                        else
+                        {
+                            //Panel3.Visible = true;
+                            chkList.Items.Clear();
+                            txtValue.Text = "";
+                            string strSql = "Select  isnull(FieldValues,'') FieldValues from PDFields where [Field Name]='" + ddlField.SelectedItem.Text.ToString().Trim() + "'";
+                            string ColNames = (string)GlobalValues.ExecuteScalar(strSql);
+                            if (ColNames == null) { ColNames = ""; }
+                            //       chkList.Items.Clear();
+                            if (ColNames.Length > 0)
+                            {
+                                string[] Cols = ColNames.Split(',');
+
+                                for (int iText = 0; iText < Cols.Length; iText++)
+                                {
+                                    if (Cols[iText].ToString() != "")
+                                    {
+                                        if (rowValue.Contains(Cols[iText].ToString()))
+                                        {
+
+                                        }
+                                        else
+                                        {
+                                            chkList.Items.Add(Cols[iText].ToString());
+                                            //  chkList.Items.Add(Cols[iText].ToString());
+                                        }
+                                    }
+                                }
+
+
+                            }
+                            else
+                            {
+                                strSql = "Select  isnull([Table Name],'') TableName from PDFields where [Field Name]='" + ddlField.SelectedItem.Text.ToString().Trim() + "'";
+                                string TableName = (string)GlobalValues.ExecuteScalar(strSql);
+                                if (TableName == null) { TableName = ""; }
+                                chkList.Items.Clear();
+                                strSql = "Select distinct [" + ddlField.SelectedItem.Text.ToString().Trim() + "] from " + TableName.ToString() + " where [" + ddlField.SelectedItem.Text.ToString().Trim() + "] is not null";
+                                //  DataSet dsResult = new DataSet();
+                                var dsResult = GlobalValues.ExecuteDataSet(strSql);
+                                DataTable dt = dsResult.Tables[0];
+                                for (int i = 0; i < dsResult.Tables[0].Rows.Count; i++)
+                                {
+                                    // string ColNamesValues = dsResult.Tables[0].Rows[0][0].ToString();
+                                    //string[] Cols = ColNamesValues.Split(',');
+                                    //for (int j = 0; j <= Cols.Length - 1; j++)
+                                    //{
+                                    //  if (ColNamesValues[i].ToString() != "")
+                                    // {
+                                    if (dsResult.Tables[0].Rows[i][0].ToString() != "")
+                                    {
+                                        chkList.Items.Add(dsResult.Tables[0].Rows[i][0].ToString());
+
+                                    }
+                                    //}
+                                }
+
+
+
+
+
+
+                            }
+
+
+
+
+
+
+                        }
+
+                    }
+                }
+
+            }
+            string[] values;
+            if (ViewState["checkedValue"] != null)
+            {
+                values = ViewState["checkedValue"].ToString().Split(',');
+                for (int count = 0; count < chkList.Items.Count; count++)
+                {
+
+                    //  string[] values = ViewState["checkedValue"].ToString().Split(',');
+
+                    for (int valCount = 0; valCount < values.Length; valCount++)
+                    {
+                        if (string.Equals(chkList.Items[valCount].Value, values[valCount]))
+                        {
+                            chkList.Items[valCount].Selected = true;
+
+                        }
+                    }
+
+
+                }
+            }
+            if (ViewState["txtValue"].ToString() != "")
+            {
+                // values = ViewState["checkedValue"].ToString().Split(',');
+                string[] txtVal = ViewState["txtValue"].ToString().Split(',');
+                //if(txtValue.Text.Length==1)
+                //{
+                //    chkList.Items.Add(ViewState["txtValue"].ToString());
+                //}
+
+
+
+                for (int valCount = 0; valCount < chkList.Items.Count; valCount++)
+                {
+
+                    // if (string.Equals(chkList.Items[valCount].Value, ViewState["txtValue"].ToString()))
+                    if (txtVal.Contains(chkList.Items[valCount].Value))
+                    {
+                        chkList.Items[valCount].Selected = true;
+
+                    }
+                }
+            }
+
+
+            showValues.Update();
+            FieldValues.Show();
+
+        }
+        protected void btnsave_Click(object sender, EventArgs e)
+        {
+            string userName = Convert.ToString(Session["Login"]);
+            if (txtTemplateName.Text == "")
+            {
+                ScriptManager.RegisterStartupScript(this, typeof(string), "PopupWindow", "alert('Please enter a Template name.');", true);
+            }
+            if (txtDesc.Text.Trim() == "")
+            {
+                ScriptManager.RegisterStartupScript(this, typeof(string), "PopupWindow", "alert('Please enter a Description.');", true);
+            }
+
+            if ((txtTemplateName.Text == "") || (txtDesc.Text.Trim() == ""))
+            {
+
+
+
+                ScriptManager.RegisterStartupScript(this, typeof(string), "PopupWindow", "alert('Please enter a Template name and Description.');", true);
+
+
+
+            }
+            else
+            {
+                var name = txtTemplateName.Text;
+                var description = txtDesc.Text.Replace("'", "''");
+
+
+                if (btnsave.Text != "Update")
+                {
+
+
+
+                    string sqlCount = "select count(*) from tblManageTemplate where mang_TemplateName = '" + name + "'  and userID='" + userName + "' ";
+                    int recCount = (int)GlobalValues.ExecuteScalar(sqlCount);
+
+                    if (recCount > 0)
+                    {
+                        ScriptManager.RegisterStartupScript(this, typeof(string), "PopupWindow", "alert('Template name already Existed. Please use differnt Templates Name');", true);
+                    }
+                    else
+                    {
+
+                        try
+                        {
+                            var insertStatement = "insert into tblManageTemplate values ( '" + name.Trim() + "','" + description.Trim() + "' ,'" + userName.Trim() + "')";
+                            var dataSet = SqlHelper.ExecuteDataset(connectionString, System.Data.CommandType.Text, insertStatement);
+                            ScriptManager.RegisterStartupScript(this, typeof(string), "PopupWindow", "alert('Template Name created successfully.');", true);
+                            clearFields();
+                        }
+                        catch (Exception exp)
+                        {
+
+
+                        }
+                    }
+                }
+
+
+                else
+                {
+
+                    if ((name.Trim() == "") || (description.Trim() == "") || (ddlTemplateNames.SelectedItem.Text == ""))
+                    {
+                        ScriptManager.RegisterStartupScript(this, typeof(string), "PopupWindow", "alert('Please select template name.');", true);
+                    }
+                    else
+                    {
+
+                        var updateStatement = "update tblManageTemplate set mang_TemplateName ='" + txtTemplateName.Text.Trim() + "' ,mang_TemplateDesc ='" + txtDesc.Text.Trim() + "' where mang_TemplateID = '" + ddlTemplateNames.SelectedValue.Trim() + "' ";
+
+                        var dataSet = SqlHelper.ExecuteDataset(connectionString, System.Data.CommandType.Text, updateStatement);
+                        ScriptManager.RegisterStartupScript(this, typeof(string), "PopupWindow", "alert(' Template Name updated  sucessfully.');", true);
+                        bindTemplates();
+                        btnsave.Text = "Save";
+                        ddlTemplateNames.Enabled = true;
+                        clearFields();
+                    }
+                }
+            }
+
+            bindCretedTemplate();
+        }
+
+        public void bindTemplates()
+        {
+            ddlTemplateNames.Enabled = true;
+            var connectionString = GlobalValues.strConnString;
+            var selectedTemplateName = ddlTemplateNames.SelectedIndex;
+            var templateNames = "select * from tblManageTemplate where UserID='" + Session["Login"].ToString() + "'"; // where mang_TemplateID = '"+ selectedTemplateName +""';
+            ddlTemplateNames.DataTextField = "mang_TemplateName";
+            ddlTemplateNames.DataValueField = "mang_TemplateID";
+            ddlTemplateNames.DataSource = SqlHelper.ExecuteDataset(connectionString, System.Data.CommandType.Text, templateNames);
+            ddlTemplateNames.DataBind();
+            ddlTemplateNames.Items.Insert(0, "");
+        }
+        protected void rbList_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (Convert.ToInt16(rbList.SelectedValue) == 2)
+            {
+                btnsave.Text = "Update";
+                bindTemplates();
+            }
+            else
+            {
+                btnsave.Text = "Save";
+                ddlTemplateNames.SelectedItem.Text = "";
+                ddlTemplateNames.Enabled = false;
+                txtTemplateName.Text = "";
+                txtDesc.Text = "";
+
+
+            }
+        }
+        public void bindTemplateNames()
+        {
+
+
+        }
+        protected void ddlTemplateNames_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+
+            var sqlSelect = "select * from tblManageTemplate where mang_TemplateID = '" + ddlTemplateNames.SelectedValue + "' ";
+            var exeSql = SqlHelper.ExecuteReader(connectionString, System.Data.CommandType.Text, sqlSelect);
+            if (exeSql.HasRows)
+            {
+                if (exeSql.Read())
+                {
+                    txtTemplateName.Text = exeSql["mang_TemplateName"].ToString();
+                    txtDesc.Text = exeSql["mang_TemplateDesc"].ToString();
+                }
+
+
+            }
+            btnsave.Text = "Update";
+        }
+
+        public void clearFields()
+        {
+            ddlTemplateNames.SelectedItem.Text = "";
+            txtTemplateName.Text = "";
+            txtDesc.Text = "";
+
+
+        }
+
+        public void bindCretedTemplate()
+        {
+
+
+            //   var sqlText = "select distinct(mang_TemplateName),mang_TemplateID,stat_ID,stat_TemplateName,stat_FieldName,stat- * from tblManageTemplate";
+
+            var sqlText = "select * from tblManageTemplate where UserID='" + Session["Login"].ToString() + "'"; //" SELECT  [stat_ID],[stat_TemplateName],[stat_FieldName],[stat_Value],[stat_GroupName],[mang_TemplateID],[login],[mang_TemplateName] FROM [oCollect17Nov].[dbo].[tblStatTemplates] ";
+            var templates = SqlHelper.ExecuteReader(connectionString, System.Data.CommandType.Text, sqlText);
+            ddlSelectTemplate.DataTextField = "mang_TemplateName";
+            ddlSelectTemplate.DataValueField = "mang_TemplateID";
+            ddlSelectTemplate.DataSource = templates;
+            ddlSelectTemplate.DataBind();
+            ddlSelectTemplate.Items.Insert(0, "");
+
+        }
+
+        public void bindFields()
+        {
+
+            var sqlText = "select * from PDFields";
+            var templates = SqlHelper.ExecuteReader(connectionString, System.Data.CommandType.Text, sqlText);
+            ddlField.DataTextField = "Field Name";
+            ddlField.DataValueField = "Field Name";// "FieldOrder";
+            ddlField.DataSource = templates;
+            ddlField.DataBind();
+            ddlField.Items.Insert(0, "");
+
+        }
+
+        protected void ddlField_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            Session["selectedString"] = ddlField.SelectedItem.ToString();
+
+        }
+
+        protected void btnSubmiItem_Click(object sender, EventArgs e)
+        {
+
+            for (int i = 0; i < chkList.Items.Count; i++)
+            {
+                if (chkList.Items[i].Selected == true)
+                {
+
+                    txtValue.Text += chkList.Items[i].Value.Trim() + ",";
+
+                }
+
+            }
+
+            string selectedString = txtValue.Text;
+            txtValue.Text = selectedString.Substring(0, selectedString.Length - 1);
+            //Panel3.Visible = false;
+
+        }
+
+        protected void btnShow_Click(object sender, EventArgs e)
+        {
+            ViewState["txtValue"] = txtValue.Text;
+            if (ddlField.SelectedItem.Text == "")
+            {
+                FieldValues.Hide();
+
+            }
+            else
+            {
+                FieldValues.Show();
+                bindValues();
+            }
+
+
+        }
+
+        protected void btnstatSave_Click(object sender, EventArgs e)
+        {
+            string userName = Convert.ToString(Session["Login"]);
+            string templateName = string.Empty;
+            ViewState["selected"] = ddlField.SelectedItem.Text;
+            if (ddlSelectTemplate.SelectedItem.Text == "" || ddlField.SelectedItem.Text == "" || txtValue.Text == "" || txtGroupName.Text == "")
+            {
+                ScriptManager.RegisterStartupScript(this, typeof(string), "PopupWindow", "alert('Fields marked with asterisk (*) are required.');", true);
+                //  ddlSelectTemplate.SelectedIndex =0;
+                ddlField.SelectedItem.Text = ViewState["selected"].ToString();
+                //  txtValue.Text = "";
+                //  txtGroupName.Text = "";
+
+            }
+            else
+            {
+
+
+
+                int templateID = ddlSelectTemplate.SelectedIndex;
+                templateName = ddlSelectTemplate.SelectedItem.Text;
+                string strSelectedTemplateName = ddlSelectTemplate.SelectedItem.Text;
+                string strSelectedField = ddlField.SelectedItem.Text;
+                string strSelectedValue = txtValue.Text.Trim();
+                string groupName = txtGroupName.Text;
+                string sqlCount = "select count(*) from tblStatTemplates where stat_GroupName = '" + groupName.Trim() + "' ";
+                int recCount = (int)GlobalValues.ExecuteScalar(sqlCount);
+                //if(ViewState["flag"] "Edit")
+                //{
+                //    btnstatSave.Text = "Update";
+                //}
+
+                if (recCount > 0 && btnstatSave.Text != "Update")
+                {
+                    ScriptManager.RegisterStartupScript(this, typeof(string), "PopupWindow", "alert('Group Name already Existed. Please use differnt Group Name');", true);
+                }
+                else if (btnstatSave.Text == "Update")
+                {
+                    string queryString = "select count(stat_Value) from tblstattemplates where stat_templatename ='" + templateName + "' and stat_fieldname ='" + ddlField.SelectedItem.Text.ToString().Trim() + "' and stat_value='" + txtValue.Text.Trim() + "' ";
+
+                    int queryCount = (int)GlobalValues.ExecuteScalar(queryString);
+
+                    if (queryCount >= 1)
+                    {
+                        ScriptManager.RegisterStartupScript(this, typeof(string), "PopupWindow", "alert('Field value already existed in same Template.');", true);
+                    }
+                    else
+                    {
+
+                        var updateStatement = "update tblStatTemplates set stat_FieldName ='" + ddlField.SelectedItem.Text.ToString().Trim() + "' ,stat_Value ='" + txtValue.Text + "',stat_GroupName ='" + txtGroupName.Text + "'   where stat_ID = '" + ViewState["statID"].ToString() + "' ";
+
+                        var dataSet = SqlHelper.ExecuteDataset(connectionString, System.Data.CommandType.Text, updateStatement);
+                        ScriptManager.RegisterStartupScript(this, typeof(string), "PopupWindow", "alert('Stat code updated successfully.');", true);
+                        btnstatSave.Text = "Save";
+                        ddlSelectTemplate.SelectedItem.Text = "";
+
+                        txtValue.Text = "";
+                        txtGroupName.Text = "";
+                        ddlField.SelectedItem.Text = "";
+                        ViewState["selected"] = "";
+                        ViewState["checkedValue"] = "";
+                        ViewState["flag"] = "";
+                        bindGrid();
+                        grdStatDetails.Visible = false;
+                        bindCretedTemplate();
+
+                    }
+                }
+                else
+                {
+                    try
+                    {
+                        string sqlGroupCount = "select count(*) from tblStatTemplates where stat_GroupName = '" + groupName.Trim() + "' ";
+                        int groupRecCount = (int)GlobalValues.ExecuteScalar(sqlGroupCount);
+
+                        if (groupRecCount > 0)
+                        {
+                            ScriptManager.RegisterStartupScript(this, typeof(string), "PopupWindow", "alert('Group Name already Existed. Please use differnt Group Name');", true);
+                        }
+                        else
+                        {
+                            string insertStatCode = "insert into [tblStatTemplates] values ('" + strSelectedTemplateName + "','" + strSelectedField + "','" + strSelectedValue.Trim() + "','" + groupName + "'," + Convert.ToInt16(templateID) + ", '" + userName + "','" + templateName + "' )";
+                            SqlHelper.ExecuteNonQuery(connectionString, System.Data.CommandType.Text, insertStatCode);
+                            ScriptManager.RegisterStartupScript(this, typeof(string), "PopupWindow", "alert('Stat Code created successfully.');", true);
+
+                            txtValue.Text = "";
+                            txtGroupName.Text = "";
+                            ddlField.SelectedItem.Text = "";
+                            bindCretedTemplate();
+                            ViewState["selected"] = "";
+                        }
+                    }
+                    catch (Exception exp)
+                    {
+
+                    }
+                }
+            }
+            bindGroupNames();
+            bindFields();
+            bindGrid();
+            //   ddlStatGroupName.SelectedItem.Text = templateName;
+            ddlField.SelectedItem.Text = ViewState["selected"].ToString();
+            ddlStatGroupName.SelectedIndex = 0;
+            bindCretedTemplate();
+        }
+
+        protected void ddlStatGroupName_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (ddlStatGroupName.SelectedIndex == 0)
+            {
+                grdStatDetails.Visible = false;
+            }
+            else
+            {
+                grdStatDetails.Visible = true;
+                bindGrid();
+            }
+
+
+
+        }
+
+        public void bindGrid()
+        {
+            grdStatDetails.Visible = true;
+            if (ddlStatGroupName.SelectedValue != "")
+            {
+                string selectStat = "select * from [tblStatTemplates] where mang_TemplateID ='" + ddlStatGroupName.SelectedValue + "'";
+                var statResult = SqlHelper.ExecuteDataset(connectionString, System.Data.CommandType.Text, selectStat);
+                grdStatDetails.DataSource = statResult;
+                grdStatDetails.DataBind();
+            }
+
+
+        }
+        public void bindGroupNames()
+        {
+            var sqlText = "select distinct(mang_TemplateName),mang_TemplateID from [tblStatTemplates] where UserID='" + Session["Login"].ToString() + "' ";
+            var templates = SqlHelper.ExecuteDataset(connectionString, System.Data.CommandType.Text, sqlText);
+            ddlStatGroupName.DataTextField = "mang_TemplateName";
+            ddlStatGroupName.DataValueField = "mang_TemplateID";
+            ddlStatGroupName.DataSource = templates;
+            ddlStatGroupName.DataBind();
+            ddlStatGroupName.Items.Insert(0, "");
+            ddlStatGroupName.SelectedIndex = 0;
+
+
+        }
+
+
+
+        protected void grdStatDetails_RowDeleting(object sender, GridViewDeleteEventArgs e)
+        {
+            try
+            {
+                string seletedStatID = grdStatDetails.Rows[e.RowIndex].Cells[0].Text.Trim();
+                string deleteSql = "Delete from tblStatTemplates  where [stat_ID] ='" + seletedStatID + "'";
+                GlobalValues.ExecuteNonQuery(deleteSql);
+
+            }
+            catch (Exception exp)
+            {
+
+            }
+
+            ScriptManager.RegisterStartupScript(this, typeof(string), "Delete", "alert('Stat Code Deleted Sucessfully');", true);
+            grdStatDetails.Visible = false;
+            bindGroupNames();
+
+
+        }
+
+        protected void grdStatDetails_SelectedIndexChanging(object sender, GridViewSelectEventArgs e)
+        {
+            ViewState["statID"] = grdStatDetails.Rows[e.NewSelectedIndex].Cells[0].Text.Trim();
+            ddlSelectTemplate.SelectedItem.Text = grdStatDetails.Rows[e.NewSelectedIndex].Cells[1].Text.Trim();
+            ddlSelectTemplate.Enabled = false;
+
+            ddlField.SelectedItem.Text = grdStatDetails.Rows[e.NewSelectedIndex].Cells[3].Text.Trim();
+
+            txtValue.Text = grdStatDetails.Rows[e.NewSelectedIndex].Cells[4].Text.Trim();
+
+            txtGroupName.Text = grdStatDetails.Rows[e.NewSelectedIndex].Cells[5].Text.Trim();
+            btnstatSave.Text = "Update";
+            chkList.Items.Add(txtValue.Text);
+            if (chkList.Items.Count > 0)
+            {
+                chkList.Items[0].Selected = true;
+            }
+            ViewState["checkValue"] = txtValue.Text;
+            ViewState["flag"] = "Edit";
+        }
+
+        protected void btnDelete_Click(object sender, EventArgs e)
+        {
+
+            var Text = ddlTemplateNames.SelectedItem.Text;
+            if (Text == "")
+            {
+                ScriptManager.RegisterStartupScript(this, typeof(string), "Delete", "alert('Please select a Template Name.');", true);
+            }
+            else
+            {
+                var index = ddlTemplateNames.SelectedItem.Value;
+
+                string deleteSql = "Delete from [tblManageTemplate]  where [mang_TemplateID] ='" + index + "'";
+                GlobalValues.ExecuteNonQuery(deleteSql);
+                ScriptManager.RegisterStartupScript(this, typeof(string), "Delete", "alert('Template Name has been deleted.');", true);
+                clearFields();
+                bindTemplates();
+                bindCretedTemplate();
+            }
+
+
+
+
+        }
+
+        protected void btnReset_Click(object sender, EventArgs e)
+        {
+            clearFields();
+            bindCretedTemplate();
+
+        }
+
+        public void clearStatCodeFields()
+        {
+
+            ddlSelectTemplate.SelectedItem.Text = "";
+            ddlField.SelectedItem.Text = "";
+            txtValue.Text = "";
+            txtGroupName.Text = "";
+        }
+
+        protected void btnstatReset_Click(object sender, EventArgs e)
+        {
+            clearStatCodeFields();
+            btnstatSave.Text = "Save";
+        }
+
+        protected void Button2_Click(object sender, EventArgs e)
+        {
+            //Panel3.Visible = false;
+        }
+
+        protected void btnCancel_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        protected void btnOk_Click(object sender, EventArgs e)
+        {
+            List<string> selectedValue = new List<string>();
+
+            FieldValues.Show();
+            showValues.Update();
+            List<string> lst = new List<string>();
+            string[] values = txtValue.Text.Split(',');
+
+            if (chkList.SelectedItem == null)
+            {
+
+
+                lblMessage.Visible = true;
+                lblMessage.Text = "Please select a field.";
+
+            }
+
+            else
+            {
+                for (int i = 0; i < chkList.Items.Count; i++)
+                {
+                    if (chkList.Items[i].Selected == true)
+                    {
+                        selectedValue.Add(chkList.Items[i].Text);
+
+
+
+                    }
+                }
+                for (int j = 0; j < selectedValue.Count; j++)
+                {
+                    if (ViewState["flag"] != null)
+                    {
+                        if (ViewState["flag"].ToString() == "Edit")
+                        {
+                            if (selectedValue.Count > 1)
+                            {
+                                if (txtValue.Text.Contains(selectedValue[j].ToString()))
+                                {
+
+                                }
+                                else
+                                {
+                                    txtValue.Text += "," + selectedValue[j].ToString();
+                                }
+                            }
+                            else
+                            {
+                                txtValue.Text = selectedValue[j].ToString();
+                            }
+                        }
+                    }
+
+                    else if (selectedValue.Count > 1)
+                    {
+                        if (txtValue.Text.Contains(selectedValue[j].ToString()))
+                        {
+
+
+                        }
+                        else
+                        {
+                            txtValue.Text += "," + selectedValue[j].ToString();
+                        }
+                    }
+                    else
+                    {
+
+                        txtValue.Text = selectedValue[j].ToString();
+
+
+                    }
+                }
+
+
+            }
+            if (chkList.SelectedItem == null)
+            {
+                FieldValues.Show();
+            }
+            else if (txtValue.Text.Length > 1)
+            {
+                if (txtValue.Text.StartsWith(","))
+                {
+                    txtValue.Text = txtValue.Text.Remove(0, 1);
+                }
+                FieldValues.Hide();
+            }
+
+
+
+
+
+
+        }
+
+
+
+
+        protected void btnClose_Click(object sender, EventArgs e)
+        {
+
+            Response.Redirect("SearchPatient.aspx");
+        }
+
+        protected void btnHide_Click(object sender, EventArgs e)
+        {
+            grdStatDetails.Visible = false;
+            ddlStatGroupName.SelectedItem.Text = "";
+            bindGroupNames();
+        }
+
+
+
+    }
+
+
+}

@@ -1,0 +1,121 @@
+﻿body {
+}
+
+/* ----- Structure Mobile------------------------------------------------------------ */
+.wrap{
+    max-width: 1400px;
+    margin: 0 auto;
+}
+ 
+.wrap:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+ 
+#primary{
+    /*max-width: 720px;*/
+    max-width: 100%;
+    margin: 0 auto;
+}
+ 
+#secondary,
+#tertiary{
+    max-width: 400px;
+    margin: 0 auto;
+}
+ 
+#secondary .widget,
+#tertiary .widget{
+    padding: 1em;
+    margin-bottom: 1em;
+}
+
+#btns{
+    display:block;
+}
+
+.rightHandler {
+    display: block;
+    float: right;
+    width: 40px;
+    height: 32px;
+    top:50%;
+    right:0;
+    position:fixed;
+    padding:0;
+    background-image: url('../images/expandright.gif');
+}
+
+.leftHandler {
+    display: block;
+    float: left;
+    width: 40px;
+    height: 32px;
+    top:50%;
+    left:0;
+    position:fixed;
+    padding:0;
+    background-image: url('../images/expandleft.gif');
+}
+
+@media screen and (min-width:150px) and (max-width:900px){
+    #secondary,
+    #tertiary{
+        display:none;
+    }
+}
+
+/* ---- Structure Tablet -------------------------------------------------------------- */
+ 
+@media screen and (min-width : 900px) {
+    #primary{
+        float: left;
+        width: 65%;
+        padding-right: 1em;
+    }
+ 
+    #secondary,
+    #tertiary{
+        display:none;
+        /*float: right;
+        clear: right;
+        width: 35%;*/
+    }
+
+    /*#btns{
+        display:block;
+    }*/
+}
+
+/* ---- Structure Desktop -------------------------------------------------------------- */
+@media screen and (min-width : 1140px) {
+    #primary{
+        float: left;
+        /*margin-left: 25%;*/
+        width: 60%;
+        padding: 0 1em;
+    }
+ 
+    #secondary{
+        float: left;
+        /*margin: 0 0 0 -75%;*/
+        width: 20%;
+        clear: none;
+        display:block;
+    }
+ 
+    #tertiary{
+        float: right;
+        width: 20%;
+        clear: none;
+        display:block;
+    }
+
+    #btns{
+        display:none;
+    }
+    .rightHandler, .leftHandler {
+        display:none;
+    }
+}

@@ -1,0 +1,331 @@
+/*** Onco Collect Portal Stylesheet ***/
+
+/* General */
+*                       {margin: 0px; padding: 0px;}
+html                    {width: 100%; height: 100%;}
+body                    {font-family: 'Trebuchet MS', Arial; font-size:13px; background:#ccc url('../images/bg3.jpg') repeat;}
+.clear                  {clear:both;}
+.container              {margin: 0 auto; width:940px; background-color:#fff; padding:10px;}
+img                     {border: 0px;}
+.leftFloat              {float: left;}
+.rightFloat             {float: right;}
+a                       {text-decoration: none; outline: none;}
+a.generalLinks          {color: #f48310;}
+a.generalLinks:active   {color: #f48310;}
+a.generalLinks:hover    {color: #f48310; text-decoration: underline;}  
+
+.LoginLinks             {padding-top:5px; color:#ffffff; font-size:13px; line-height:23px;}
+.LoginLinks a:link      {color:#f9d7b4; text-decoration:none;}
+.LoginLinks a:visited   {text-decoration:none;}
+.LoginLinks a:hover     {text-decoration:underline;}
+
+/* welcome section */
+.welcome                {font-size: 12px; padding-top: 0px; text-align:right;}
+.welcome a:link         {color: #0D0D0D; font-size:12px; font-weight: bold; text-decoration: none;}
+.welcome a:visited      {text-decoration: none;}
+.welcome a:hover        {text-decoration: underline;}
+
+/* Menu ` */
+#navigation             {background-color: #92A117; background-image: url(../images/sidebar_bg.jpg); background-position: top left; 
+                        background-repeat: no-repeat; width: 200px; padding: 12px 0 14px 13px; font-family: 'Trebuchet MS' , sans-serif; 
+                        font-size: 12px; color: #0D0D0D; border-bottom: 1px solid #fff;}
+#navigation li          {list-style-type: none; padding: 0 0 2px 0; line-height: 28px;}
+#navigation ab           {color: #0D0D0D; text-decoration: none; font-weight: bold; display: block; width: 179px; line-height: 28px;
+                        background-image: url(../images/li_bg.jpg); background-position: top left; background-repeat: no-repeat;
+                        padding: 0 0 0 30px;}
+#navigation a:visited   {text-decoration: none;}
+#navigation a:hover     {text-decoration: underline;}
+#help                   {height: 38px; line-height: 16px; margin: 21px 0 0 0; padding: 9px 0 0 50px; background-image: url(../images/img_help.png);
+                         background-position: top left; background-repeat: no-repeat;}
+ 
+.helpContent            {cursor: pointer; padding-top: 5px; font-size: 13px; font-weight: bold}
+
+/* login */
+
+.loginArea              {background-color: #92A117; background-image: url(../images/sidebar_bg.jpg); background-position: top left; 
+                        background-repeat: no-repeat; width: 220px; height:308px; padding: 12px 0 14px 13px; font-family: 'Trebuchet MS' , sans-serif; 
+                        font-size: 12px; color: #0D0D0D; border-bottom: 1px solid #fff;}
+                        
+.loginArea h1           {margin:0; padding-bottom:10px; color:#fefefe; font-size: 20px; font-weight: bold;}                        
+                        
+.loginArea ul.dataRow   {list-style-type: none; text-align: center; margin: 0px; padding: 0px; overflow: hidden;}
+.loginArea ul.dataRow li {float: left; padding-right:5px; width:200px; margin-left: auto; margin-right: auto; 
+                          line-height:20px; text-align:left;}
+                     
+.loginArea ul.dataRow li.text                {width:200px; text-align:left; font-size:13px; color:#ffffff; padding-top:10px;}
+.loginArea ul.dataRow li.text span           {color:#ff0000;}
+.loginArea ul.dataRow li.inputArea           {width:220px; text-align:left; font-size:12px;}
+
+/* main content */
+#contentMain                {width: 970px; overflow: hidden; float: left; padding: 0 0 7px 0;}
+#sidebar                {width: 200px; float: left; padding: 0 0 0 0px;}
+#main                   {width: 582px; float: left;}
+#insideHome             {width:900px; padding: 15px 0 0 17px; float: left;}
+#insideHome h1          {font-size: 18px; font-weight: bold;}  
+#insideHome p           {font-family: 'Trebuchet MS' , sans-serif; font-size: 13px; color: #444444; padding: 15px 0 20px 0; line-height:20px;
+                         text-align:justify;}    
+#inside                 {padding: 5px 0 0 20px; float: left; width:700px;}
+#inside h1              {margin:0; padding-bottom:10px; font-size: 16px; font-weight: bold;}
+.info                   {font-family: 'Trebuchet MS' , sans-serif; font-size: 13px; color: #444444; padding: 7px 10px 30px 10px; overflow: hidden;
+                         float: left; width:582px; background-color:#F5F5F5;}
+.info p                 {width: 680px; float: left; padding: 0 0 12px 0; text-align: justify;}
+
+/* footer */
+#footer                 {text-align: center; font-family: 'Trebuchet MS' , Helvetica, sans-serif; font-size: 13px; color: #0D0D0D; padding: 0 0 5px 0;}
+#footer ul              {padding: 15px 0 0px 0;}
+#footer li              {display: inline; list-style-type: none;}
+#footer ul a            {color: #0D0D0D; text-decoration: none; margin: 0 5px;}
+#footer ul a:visited    {text-decoration: none;}
+#footer ul a:hover      {text-decoration: underline;}
+
+/* Entry Section */
+.entryOuterDiv          {width:630px; background-color:#eee; padding:10px;}
+.entryArea              {margin-left: auto; margin-right: auto;}
+
+/* Entry page */
+.entryArea ul.entryRow                        {list-style-type: none; text-align: center; margin: 0px; padding: 0px; overflow: hidden;}
+.entryArea ul.entryRow li                     {float: left; padding-left: 5px; padding-right:5px; width:200px; margin-left: auto; margin-right: auto; 
+                                                line-height:32px; text-align:left;}
+.entryArea ul.entryRow li.text                {width:200px; text-align:right; font-size:13px;}
+.entryArea ul.entryRow li.text span           {color:#ff0000;}
+.entryArea ul.entryRow li.inputArea           {width:350px; text-align:left; font-size:12px;}
+.entryArea ul.entryRow li.selectArea          {width:350px; text-align:left; font-size:12px;}
+.entryArea ul.entryRow li.selectArea select   {font-size:12px; width:202px; height:22px;}
+.entryArea ul.entryRow li.col2                {width:360px; text-align:left; font-size:12px;}
+
+/* input styles */
+.textInput              {width:200px; font-size:11px; height:18px;}
+.textInputSpan1         {width:30px; font-size:11px; height:18px;}
+.textInputAge           {width:30px; font-size:11px; height:18px;}
+.inputRadio             {width:30px; font-size:11px; height:18px;}
+
+/* table grid content area */ 
+table                   {border-collapse: collapse; border-spacing: 0;}
+table td                {vertical-align: top;}
+.gridArea               {width: 690px; background: #fff; white-space: nowrap;}
+.dataGrid               {width: 690px; font-size: 12px; color: #000; border: 0px none #000;}
+.dataGrid th            {background-image: url('../images/bg_dataGrid_header.png'); background-repeat:repeat; color: #000000; font-weight:bold;
+                         padding: 5px 10px; text-align: left; vertical-align:top; border-top:1px solid #d7d7d7; border-bottom:1px solid #d7d7d7;}  
+.dataGrid tr.altRow     {background-color:#e8eebc; border:1px solid #eee;} 
+.dataGrid tr.selected   {background-color:#e3f0f9;} 
+.dataGrid td            {padding: 5px 10px; border: 0px none #000; vertical-align:top; border-bottom:1px solid #eee;}
+.dataGrid td.spanColumn {text-align: right;}
+.dataGrid tr.footer     {background-image: url('../images/bg_dataGrid_header.png'); background-repeat:repeat; color: #000000; font-weight:bold;
+                         padding: 5px 10px; text-align: left; vertical-align:top; border-top:1px solid #d7d7d7; border-bottom:1px solid #d7d7d7;}
+
+/* buttons */
+.btn                    {margin: 0px; border: 0px solid red; height: 22px;}
+a.link_btn              {display: block; float:left; padding:0px 15px; background-color:#ef800e; height: 22px; text-decoration: none; 
+                        font-family: Trebuchet MS; font-size: 13px; color: #ffffff;font-weight: bold; cursor: pointer; line-height: 22px; 
+                        text-align: center; margin-right:15px; -moz-border-radius: 5px; border-radius: 5px;}
+a.link_btn:hover        {display: block; float:left; background-color:#d76f06; text-decoration: none; -moz-border-radius: 5px; border-radius: 5px;}
+/*added by Saji*/
+.IndentItem
+{
+    /*color: #0D0D0D;*/
+    text-decoration: none;
+    font-weight: bold;
+    display: block;
+    width: 125px;
+    line-height: 28px;
+    background-image: url(../images/li_bg_Small.jpg);    
+    background-position: top right;
+    background-repeat: no-repeat;
+    padding-left:85px;
+    /*padding: 50 130 0 10px;*/
+}
+/*.MainLeftItem
+{
+	padding: 10px;
+	background: #C3EBF8;
+	border-bottom: 1px solid #CDD3D0;
+	 text-indent: 30px;
+	 display: block;
+width: 179px;
+}*/
+
+.column-left {
+	  float: left;
+    margin-right: 10px;
+    padding: 10px 0;
+    width: 25%;
+}
+
+.inputRadio {
+    text-indent: 5px !important;	
+	padding: 10px;
+	background: #C3EBF8;
+	border-bottom: 1px solid #CDD3D0;
+	 width: 200px;
+	  color: #0D0D0D;
+	  font-family:Arial;
+	  font-size:13px;
+	 }
+.MainLeftItem
+{
+    color: #0D0D0D;
+    background: #C3EBF8;
+    text-decoration: none;
+    font-size:13px;
+    font-family:Arial;
+    display: block;
+    width: 200px;
+    line-height: 28px;
+    /*background-image: url(../images/li_bg.jpg);*/
+    background-position: top left;
+    background-repeat: no-repeat;
+    padding: 0 0 0 30px;
+    margin: 0px;
+
+background: #C3EBF8;
+	border-bottom: 1px solid #CDD3D0;
+	 text-indent: 1px;
+	 box-sizing:border-box;
+}
+.button {
+color: #fef4e9;
+	border: solid 1px #da7c0c;
+	background: #ef800e;
+	background: -webkit-gradient(linear, left top, left bottom, from(#faa51a), to(#f47a20));
+	background: -moz-linear-gradient(top,  #faa51a,  #f47a20);
+	filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#faa51a', endColorstr='#f47a20');
+	
+}
+.myButton {
+	-moz-box-shadow:inset 0px 1px 0px 0px #fff6af;
+	-webkit-box-shadow:inset 0px 1px 0px 0px #fff6af;
+	box-shadow:inset 0px 1px 0px 0px #fff6af;
+	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #ef800e), color-stop(1, #ffab23));
+	background:-moz-linear-gradient(top, #ef800e 5%, #ffab23 100%);
+	background:-webkit-linear-gradient(top, #ef800e 5%, #ffab23 100%);
+	background:-o-linear-gradient(top, #ef800e 5%, #ffab23 100%);
+	background:-ms-linear-gradient(top, #ef800e 5%, #ffab23 100%);
+	background:linear-gradient(to bottom, #ef800e 5%, #ffab23 100%);
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#ef800e', endColorstr='#ffab23',GradientType=0);
+	background-color:#ef800e;
+	-moz-border-radius:6px;
+	-webkit-border-radius:6px;
+	border-radius:6px;
+	border:1px solid #ffaa22;
+	display:inline-block;
+	cursor:pointer;
+	color:#333333;
+	font-family:arial;
+	font-size:15px;
+	font-weight:bold;
+	padding:6px 24px;
+	text-decoration:none;
+	text-shadow:0px 1px 0px #ffee66;
+}
+.myButton:hover {
+	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #ffab23), color-stop(1, #ef800e));
+	background:-moz-linear-gradient(top, #ffab23 5%, #ef800e 100%);
+	background:-webkit-linear-gradient(top, #ffab23 5%, #ef800e 100%);
+	background:-o-linear-gradient(top, #ffab23 5%, #ef800e 100%);
+	background:-ms-linear-gradient(top, #ffab23 5%, #ef800e 100%);
+	background:linear-gradient(to bottom, #ffab23 5%, #ef800e 100%);
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffab23', endColorstr='#ef800e',GradientType=0);
+	background-color:#ffab23;
+}
+.myButton:active {
+	position:relative;
+	top:1px;
+}
+
+
+.div-style {
+	z-index: 999;
+	position: absolute;
+	visibility: hidden;
+}
+.LabelRight
+{
+    text-align: right;
+    font-weight:bold;
+    vertical-align:top;
+    
+}
+[disabled] { /* Text and background colour, medium red on light yellow */ 
+
+font-size: 13px; color: #000000;
+/*font-weight: bold;*/
+background-color:inherit;
+/*background-color:#eee;*/
+} 
+
+input[readonly]
+{
+    background-color:#F0F0F0 !important; 
+color:#303030 !important;}
+
+.txtBox { /* Text and background colour, medium red on light yellow */ 
+
+font-size: 13px; color:Blue;font-weight: bold;
+background-color:inherit;
+/*background-color:#eee;*/
+} 
+.pagination
+{
+  line-height: 26px;
+}
+
+.pagination span
+{
+  padding: 5px;
+  border: solid 1px #477B0E;
+  text-decoration: none;
+  white-space: nowrap;
+  background: #547B2A;
+}
+
+.pagination a, 
+.pagination a:visited
+{
+  text-decoration: none;
+  padding: 6px;
+  white-space: nowrap;
+}
+.pagination a:hover, 
+.pagination a:active
+{
+  padding: 5px;
+  border: solid 1px #9ECDE7;
+  text-decoration: none;
+  white-space: nowrap;
+  background: #486694;
+}
+
+.MyCalendar .ajax__calendar_container {
+    border:1px solid #646464;
+    background-color: lemonchiffon;
+    color: red;
+}
+.MyCalendar .ajax__calendar_other .ajax__calendar_day,
+.MyCalendar .ajax__calendar_other .ajax__calendar_year {
+    color: black;
+}
+.MyCalendar .ajax__calendar_hover .ajax__calendar_day,
+.MyCalendar .ajax__calendar_hover .ajax__calendar_month,
+.MyCalendar .ajax__calendar_hover .ajax__calendar_year {
+    color: black;
+}
+.MyCalendar .ajax__calendar_active .ajax__calendar_day,
+.MyCalendar .ajax__calendar_active .ajax__calendar_month,
+.MyCalendar .ajax__calendar_active .ajax__calendar_year {
+    color: black;
+    font-weight:bold;
+}
+
+.chkBoxList tr
+{
+   height:24px;
+}
+
+.chkBoxList td
+{
+   width:130px; /* or percent value: 25% */
+}
+.inputText
+{
+    z-index: 9999;
+}

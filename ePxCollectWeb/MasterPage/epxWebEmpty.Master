@@ -1,0 +1,638 @@
+<%@ Master Language="C#" AutoEventWireup="True" CodeBehind="epxWebEmpty.master.cs"
+    Inherits="ePxCollectWeb.MasterPage.epxWebEmpty" %>
+
+<%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="ajax" %>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head runat="server">
+    <meta charset="UTF-8"/>
+    <title>OncoCollect-Enterprise</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link href="~/Style/reset.css" rel="stylesheet" />
+    <link href="~/onCoAlert/sweetalert.css" rel="stylesheet" />
+
+<!-- Bootstrap core CSS -->
+    <link href="~/Style/bootstrap.min.css" rel="stylesheet" />
+
+<!-- SmartMenus jQuery Bootstrap Addon CSS -->
+    <link href="~/Style/jquery.smartmenus.bootstrap.css" rel="stylesheet" />
+    <link rel="stylesheet" href="~/Style/styleNew.css" type="text/css" />
+
+    <script type="text/javascript" src="<%=Page.ResolveUrl("~/Scripts/jquery-1.8.2.min.js")%>"></script>
+    <script type="text/javascript" src="<%=Page.ResolveUrl("~/Scripts/modernizr.min.js")%>"></script> 
+    <script type="text/javascript" src="<%=Page.ResolveUrl("~/Scripts/respond.min.js")%>"></script>
+    <script type="text/javascript" src="<%=Page.ResolveUrl("~/Scripts/prefixfree.min.js")%>"></script>   
+    <script type="text/javascript" src="<%=Page.ResolveUrl("~/Scripts/backfix.min.js")%>"></script>
+
+    <!--[if (gte IE 9)|!(IE)]><--> 
+        <script type="text/javascript" src="<%=Page.ResolveUrl("~/onCoAlert/sweetalert.min.js")%>"></script> 
+    <!--<![endif]-->
+
+    <asp:ContentPlaceHolder ID="HeadContent" runat="server" Visible="false">
+    </asp:ContentPlaceHolder>
+    <script language="JavaScript" type="text/javascript">
+
+        var version = navigator.appVersion;
+
+        function BlockF5(e) {
+            var keycode = (window.event) ? event.keyCode : e.keyCode;
+
+            if ((version.indexOf('MSIE') != -1)) {
+                if (keycode == 116 || (e.ctrlKey && keycode == 82)) {
+                    event.keyCode = 0;
+                    event.returnValue = false;
+                    return false;
+                }
+            }
+            else {
+                if (keycode == 116) {
+                    return false;
+                }
+            }
+        }
+
+    </script>
+    <style type="text/css">
+        .coVersion {
+            font-size: 12px;
+            display: inline-block;
+            top: 49px;
+            position: absolute;
+            left: 173px;
+            color: rgb(157, 157, 157);
+        }
+    </style>
+
+        <script type="text/javascript">
+
+            function ShowDisclaimerConfirm() {
+                var txtBox;
+                txtBox = document.getElementById("ctl00_MainContent_TextBox1");
+                var x = txtBox.value;
+                var r = confirm(x);
+                if (r == true) {
+                    //x = "You pressed OK!";
+                    window.location.href = 'SearchPatient.aspx';
+                }
+                else {
+                    x = "You pressed Cancel!";
+                }
+                // alert(x);
+            }
+
+
+
+            function showDisease(strP) {
+
+                var curStyle = document.getElementById(strP).style.display;
+                if (strP == "ctl00_divStudy") {
+                    document.getElementById("ctl00_TxtHidden").value = "Study";
+                    alert(document.getElementById("ctl00_TxtHidden").value);
+
+                    window.open("ProjectForm.aspx");
+                } else
+                    if (strP == "ctl00_divDisease") {
+                        document.getElementById("ctl00_TxtHidden").value = "Study";
+                        alert(document.getElementById("ctl00_TxtHidden").value);
+
+                        window.open("ProjectForm.aspx");
+                    }
+            }
+            function fnPopWindow(fName, ColName) {
+                //alert(tName);
+                if (window.showModalDialog) {
+
+                    var opt = 'dialogWidth:650px; dialogHeight:400px; center:yes; scroll:no; status:no';
+                    window.showModalDialog(fName, ColName, opt);
+                    return false;
+                    //                     retVal = window.showModalDialog("NewPatient.aspx", "_blank", "dialogHeight:=200px;dialogWidth:100; left:50,top:10; " +
+                    //                                "location:no; menubar:no; scrollbars:no; titlebar:no; toolbar:no", true);
+                } else {
+                    //                     retVal = window.open("Register.aspx", "_blank", "height:300; width:800; left:50;top:100; " +
+                    //                                "location:no; menubar:no; scrollbars:no; titlebar:no; toolbar:no", opt,true);
+                    var opt = 'dialogWidth:650px; dialogHeight:400px; center:yes; scroll:no; status:no';
+                    window.showModalDialog(fName, ColName, opt);
+                    return false;
+                }
+            }
+
+
+            function fnPopup(tName, ctlName) {
+                if (window.showModalDialog) {
+                    var opt = 'dialogWidth:325px; dialogHeight:350px; center:yes; scroll:no; status:no';
+                    var retVal = window.showModalDialog("UserControl/PopupMultiSelect.aspx?tName=" + tName, "", opt, true);
+                    try {
+                        if (retVal == null) {
+                            document.getElementById(ctlName).value = document.getElementById(ctlName).value;
+                            //alert(retVal);
+                        } else
+                            if (retVal == undefined) {
+                                document.getElementById(ctlName).value = document.getElementById(ctlName).value;
+                                //alert(retVal );
+                            } else
+                                if (retVal != "") {
+                                    document.getElementById(ctlName).value = retVal.toString();
+                                }
+                    }
+                    catch (e) {
+                    }
+                }
+                else {
+                    var opt = 'dialogWidth:325px; dialogHeight:350px; center:yes; scroll:no; status:no';
+                    var rtvalue = window.open("UserControl/PopupMultiSelect.aspx?tName=" + tName, "", opt);
+                    try {
+                        if (rtvalue != "undefined") {
+                            document.getElementById(ctlName).value = rtvalue.toString().replace("undefined", "");;
+                        }
+                        ctlName.focus();
+                    } catch (e) {
+                    }
+                }
+            }
+
+            function fnSingleSelect(tName, ctlName, strVal) {
+                if (window.showModalDialog) {
+                    var opt = 'dialogWidth:510px; dialogHeight:580px; center:yes; scroll:no; status:no';
+                    var retVal = window.showModalDialog("FieldValueSelect.aspx?FN=" + tName + "&Val=" + strVal, "", opt, true);
+                    try {
+                        if (retVal == null) {
+                            document.getElementById(ctlName).value = document.getElementById(ctlName).value;
+                        } else
+                            if (retVal == undefined) {
+                                document.getElementById(ctlName).value = document.getElementById(ctlName).value;
+                            } else
+                                if (retVal != "") {
+                                    document.getElementById(ctlName).value = retVal.toString();
+                                }
+                    }
+                    catch (e) {
+                    }
+                }
+                else {
+                    var opt = 'dialogWidth:510px; dialogHeight:580px; center:yes; scroll:no; status:no';
+                    var rtvalue = window.open("FieldValueSelect.aspx?FN=" + tName + "&Val=" + strVal, "", opt);
+                    try {
+                        if (rtvalue != "undefined") {
+                            document.getElementById(ctlName).value = rtvalue.toString().replace("undefined", "");;
+                        }
+                        ctlName.focus();
+                    } catch (e) {
+                    }
+                }
+            }
+
+            function fnPopupRightMultiPick(tName, ctlName) {
+
+                if (window.showModalDialog) {
+                    var opt = 'dialogWidth:325px; dialogHeight:350px; center:yes; scroll:no; status:no';
+                    var retVal = window.showModalDialog("UserControl/PopupMultiSelect.aspx?tName=" + tName, "", opt);
+                    try {
+
+                        if (retVal == null) {
+                            document.getElementById(ctlName).value = document.getElementById(ctlName).value;
+                        } else
+                            if (retVal == undefined) {
+                                document.getElementById(ctlName).value = document.getElementById(ctlName).value;
+                            } else
+                                if (retVal != "") {
+                                    document.getElementById(ctlName).value = retVal.toString().replace("undefined", "");
+                                }
+                    }
+                    catch (e) {
+
+                    }
+                }
+                else {
+                    var opt = 'dialogWidth:325px; dialogHeight:350px; center:yes; scroll:no; status:no';
+                    var rtvalue = window.open("UserControl/PopupMultiSelect.aspx?tName=" + tName, "", opt);
+
+                    try {
+                        if (rtvalue != "undefined") {
+                            document.getElementById(ctlName).value = rtvalue.toString().replace("undefined", "");;
+                        }
+                        ctlName.focus();
+                    } catch (e) {
+
+                    }
+
+                }
+            }
+
+            function fnMultiSelect(tName, ctlName, strVal) {
+
+                if (window.showModalDialog) {
+                    var opt = 'dialogWidth:510px; dialogHeight:580px; center:yes; scroll:no; status:no';
+                    var retVal = window.showModalDialog("FieldValueMultiSelect.aspx?FN=" + tName + "&Val=" + strVal, "", opt);
+                    try {
+
+                        if (retVal == null) {
+                            document.getElementById(ctlName).value = document.getElementById(ctlName).value;
+                        } else
+                            if (retVal == undefined) {
+                                document.getElementById(ctlName).value = document.getElementById(ctlName).value;
+                            } else
+                                if (retVal != "") {
+                                    document.getElementById(ctlName).value = retVal.toString().replace("undefined", "");
+                                }
+                    }
+                    catch (e) {
+
+                    }
+                }
+                else {
+                    var opt = 'dialogWidth:510px; dialogHeight:580px; center:yes; scroll:no; status:no';
+                    var rtvalue = window.open("FieldValueMultiSelect.aspx?FN=" + tName + "&Val=" + strVal, "", opt);
+
+                    try {
+                        if (rtvalue != "undefined") {
+                            document.getElementById(ctlName).value = rtvalue.toString().replace("undefined", "");;
+                        }
+                        ctlName.focus();
+                    } catch (e) {
+
+                    }
+
+                }
+            }
+
+            function fnDrugForm(tName, ctlName, strVal) {
+                if (window.showModalDialog) {
+                    var opt = 'dialogWidth:1000px; dialogHeight:280px; center:yes; scroll:no; status:no';
+                    var retVal = window.showModalDialog("DeseaseScreen.aspx?FN=" + tName + "&Val=" + strVal, "", opt, true);
+                    try {
+                        if (retVal == null) {
+                            document.getElementById(ctlName).value = document.getElementById(ctlName).value;
+                        } else
+                            if (retVal == undefined) {
+                                document.getElementById(ctlName).value = document.getElementById(ctlName).value;
+                            } else
+                                if (retVal != "") {
+                                    document.getElementById(ctlName).value = retVal.toString();
+                                }
+                    }
+                    catch (e) {
+                    }
+                }
+                else {
+                    var opt = 'dialogWidth:1000px; dialogHeight:280px; center:yes; scroll:no; status:no';
+                    var rtvalue = window.open("DeseaseScreen.aspx?FN=" + tName + "&Val=" + strVal, "", opt);
+                    try {
+                        if (rtvalue != "undefined") {
+                            document.getElementById(ctlName).value = rtvalue.toString().replace("undefined", "");;
+                        }
+                        ctlName.focus();
+                    } catch (e) {
+                    }
+                }
+            }
+            function ValidateTextBoxForDataTypeLongINT(evt, input) {
+                var charCode;
+                if (evt.keyCode) //For IE
+                    charCode = evt.keyCode;
+                else if (evt.Which)
+                    charCode = evt.Which; // For FireFox
+                else
+                    charCode = evt.charCode; // Other Browser
+                if (charCode > 31 && (charCode < 48 || charCode > 57))
+                    return false;
+                else
+                    return true;
+            }
+            function ValidateTextBoxForDataTypeTextAlphaNumericFileNumber(evt, value, input, lbltext) {
+                //CommaSpaceHypen  {}-@,.~!%$()*/
+                var charCode;
+                if (evt.keyCode) //For IE
+                    charCode = evt.keyCode;
+                else if (evt.Which)
+                    charCode = evt.Which; // For FireFox
+                else
+                    charCode = evt.charCode; // Other Browser
+                if ((charCode >= 48 && charCode <= 57) || (charCode > 64 && charCode <= 90) || (charCode >= 97 && charCode <= 122) || (charCode == 08 || charCode == 32 || charCode == 45 || charCode == 46)) {
+                    return true;
+                }
+
+                else
+                    return false;
+
+            }
+
+            function validateKeyup(input) {
+                var val = input.value.replace(/^[\s!@#$%^&*(){}|+_)~`<>,.]+|\s+$/, '');
+
+                if (val.length == 0) {
+                    input.value = "";
+                    // alert('Please Enter valid text');
+                }
+
+            }
+
+            function fnPopupDisclaimer(tName) {
+
+                if (window.showModalDialog) {
+                    var pageURL = "Disclaimer.aspx";
+                    var title = "Disclaimer";
+                    var w = 600;
+                    var h = 800;
+                    alert("hello");
+                    var left = (screen.width / 2) - (w / 2);
+                    var top = (screen.height / 2) - (h / 2);
+                    var retVal = window.open(pageURL, title, 'toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=no, resizable=no, copyhistory=no, width=' + w + ', height=' + h + ', top=' + top + ', left=' + left);
+                    try {
+                        // alert(retVal);
+                        if (retVal != "" && retVal != undefined) {
+                            //                        window.location.href = 'Login.aspx';
+                            window.location.href = 'SearchPatient.aspx';
+                        }
+                        //else { window.location.href = 'SearchPatient.aspx'; }
+                    }
+                    catch (e) {
+                    }
+                }
+                else {
+                    var opt = 'dialogWidth:600px; dialogHeight:800px; position:center;  center:yes; scroll:no; status:no';
+                    alert("Opening firefox");
+                    var rtvalue = window.open("Disclaimer.aspx", "", opt);
+                    try {
+                        if (rtvalue != "") {
+                            window.location.href = 'SearchPatient.aspx';
+                        }
+                    } catch (e) {
+                    }
+                }
+            }
+        </script>
+        <script type="text/javascript">
+            function preventBack() {
+                alert(document.referrer);
+
+                alert(document.referrer);
+                if (document.referrer == null) {
+                    document.location.href = "login.aspx";
+                }
+                window.history.forward();
+            }
+            setTimeout("preventBack()", 0);
+            window.onunload = function () {
+                null
+            };
+
+
+            var ClickBkButton = false;
+
+            function noBack() {
+
+                if (document.referrer == null || document.referrer == "") {
+                    document.location.href = "login.aspx";
+                } window.history.forward(); setTimeout("noBack()", 500);
+            }
+            noBack();
+            window.onload = noBack;
+            window.onpageshow = function (evt) { if (evt.persisted) noBack() }
+            window.onunload = function () { void (0) }
+
+            function preventBack() { window.history.forward(); }
+            setTimeout("preventBack()", 10);
+            window.onunload = function () { null };
+
+            bajb_backdetect.OnBack = function () {
+                ClickBkButton = true;
+                if (navigator.appName.indexOf("Microsoft") != -1)
+                    window.history.forward(1);
+                else
+                    window.history.forward(-1);
+            }
+
+        </script>
+</head>
+<body style="height: 100%; margin: 0 auto; padding: 0px; width: 100%;" onload="preventBack();" onkeydown="return BlockF5(event)">
+    <form id="Form1" runat="server">
+        <div class="containMaster" style="width: 100%;">
+            <!-- Static navbar -->
+            <div class="navbar navbar-default" role="navigation">
+              <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                  <span class="sr-only">Toggle navigation</span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#"><img src="images/logo.png" />
+                    <div class="coVersion" id="coVersion" runat="server"></div></a>
+              </div>
+              <div class="navbar-collapse collapse">
+
+                <!-- Left nav -->
+                <ul class="nav navbar-nav">
+                  <li><a href="#">Data Analysis</a>
+                    <ul class="dropdown-menu">
+                      <li><a href="#">Patient Analysis</a>
+                          <ul class="dropdown-menu">
+                              <li><a href="DataAnalysis.aspx?AType=ByStudy">By Study</a></li>
+                              <li><a href="DataAnalysis.aspx?AType=All">By All Parameters</a></li>
+                          </ul>
+                      </li>
+                      <li><a href="SavedQueriesView.aspx?SN=Toxicity&Type=SavedQry">My Saved Queries</a></li>
+                      <li><a href="StatusReminder.aspx?SN=Toxicity&Type=Status">Status Check List</a></li>
+                      <li><a href="DataAnalysis.aspx?AType=ByDiag">Drug Dosage Analysis</a></li>
+                    </ul>
+                  </li>
+                </ul>
+                <ul id="userDetail" style="margin-left: 5px; padding: 13px; padding-right: 15px; text-align:center">
+                    <li>Welcome
+                    <asp:Label ID="lblUser" runat="server" Text=""></asp:Label>
+                        &nbsp; | &nbsp;
+                        <asp:LinkButton ID="lnkLoginHistory" runat="server" Text="Login History" OnClick="lnkLoginHistory_Click" ForeColor="#3035DC4" CssClass="linkclass" />&nbsp;&nbsp;&nbsp;&nbsp;
+                        <asp:LinkButton ID="lnkErrorReport" runat="server" Text="Error Report" OnClick="lnkErrorReport_Click" ForeColor="#035DC4" CssClass="linkclass" />&nbsp;&nbsp;&nbsp;&nbsp;
+                    <asp:LinkButton ID="lnklogout" runat="server" Text="Logout" OnClick="lnklogout_Click" ForeColor="#035DC4" CssClass="linkclass" />
+                </ul>
+              </div>
+                <!--/.nav-collapse -->
+            </div>
+
+            <!--
+            <div class="header">
+                <img src="images/logo.png" alt="logo" onmousedown="return false;">
+                <div id='menumaster'>
+                    <ul runat="server" id="ul1"></ul>
+                    <asp:Menu ID="Menu1" runat="server" Orientation="Horizontal" RenderingMode="Table"
+                        CssClass="MainMenu" StaticSubMenuIndent="16px" Width="100px">
+                        <LevelMenuItemStyles>
+
+                            <asp:MenuItemStyle CssClass="level1" ForeColor="White" />
+                            <asp:MenuItemStyle CssClass="level2" />
+                            <asp:MenuItemStyle CssClass="level3" />
+                        </LevelMenuItemStyles>
+                        <StaticHoverStyle CssClass="hoverstyle" />
+                        <Items>
+                            <asp:MenuItem Text="Data Analysis" Value="Data Analysis">
+                                <asp:MenuItem Text="Patient Analysis" Value="Patient Analysis" Selectable="false">
+                                    <asp:MenuItem Text="By Study" NavigateUrl="~/DataAnalysis.aspx?AType=ByStudy" Value="By Study"></asp:MenuItem>
+                                    <asp:MenuItem Text="By All Parameters" NavigateUrl="~/DataAnalysis.aspx?AType=All"
+                                        Value="By All Parameters"></asp:MenuItem>
+                                </asp:MenuItem>
+                                <asp:MenuItem Text="My Saved Queries" NavigateUrl="~/SavedQueriesView.aspx?SN=Toxicity&Type=SavedQry"
+                                    Value="My Saved Queries"></asp:MenuItem>
+                                <asp:MenuItem Text="Status Check List" Value="Status Check List" NavigateUrl="~/StatusReminder.aspx?SN=Toxicity&Type=Status"></asp:MenuItem>
+                                <asp:MenuItem Text="Drug Dosage Analysis" NavigateUrl="~/DataAnalysis.aspx?AType=ByDiag"
+                                    Value="Drug Dosage Analysis"></asp:MenuItem>
+                            </asp:MenuItem>
+                        </Items>
+                    </asp:Menu>
+                </div>
+            </div>
+
+                -->
+            <div class="content">
+                <div class="data">
+                    <div id="details">
+                        <asp:ContentPlaceHolder ID="MainContent" runat="server" />
+
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div>
+            <asp:Panel ID="pnlSelection" runat="server" Height="300px" Width="600px" BackColor="white"
+                BorderColor="Black" Style="border: 1px solid; display: none;">
+                <%--  <div style="width: 100%; background: #0099C8; height: 35px; color: White; vertical-align: middle">--%><%--Code modified on March 25,2015--%>
+                <div style="width: 100%; background: #2A75A9; height: 35px; vertical-align: middle; color: White; text-align: center; padding-top: 5px;">
+                    <b>Login History</b>
+                </div>
+                <table align="center" style="padding: 5px; color: Black; vertical-align: middle">
+                    <%--style="margin-top: 20px; color: Black;">--%>
+                    <tr>
+                        <td align="center">
+
+                            <asp:GridView ID="GridLoginAudit" runat="server" AutoGenerateColumns="False"
+                                BorderColor="#E7E7FF" BorderStyle="Solid" BorderWidth="1px" EnableModelValidation="True"
+                                Font-Size="12px" GridLines="None"
+                                Style="margin-left: 0px" Width="500px" PageSize="15">
+                                <AlternatingRowStyle BackColor="White" />
+                                <Columns>
+                                    <asp:TemplateField HeaderText="LogTime" ItemStyle-Width="150px">
+                                        <HeaderTemplate>
+                                            <asp:Label ID="lblLogTime" runat="server" Text="Log Time"></asp:Label>
+                                        </HeaderTemplate>
+                                        <ItemTemplate>
+                                            <asp:Label ID="LabelLogTime" runat="server" Text='<%# Eval("LogTime") %>'></asp:Label>
+                                        </ItemTemplate>
+                                        <HeaderStyle HorizontalAlign="Left" />
+                                        <ItemStyle HorizontalAlign="Left" />
+                                    </asp:TemplateField>
+                                    <asp:TemplateField HeaderText="Action" ItemStyle-Width="150px">
+                                        <HeaderTemplate>
+                                            <asp:Label ID="lblAction" runat="server" Text="Action"></asp:Label>
+                                        </HeaderTemplate>
+                                        <ItemTemplate>
+                                            <asp:Label ID="LabelAction" runat="server" Text='<%# Eval("Action") %>'></asp:Label>
+                                        </ItemTemplate>
+                                        <HeaderStyle HorizontalAlign="Left" />
+                                        <ItemStyle HorizontalAlign="Left" />
+                                    </asp:TemplateField>
+                                    <asp:TemplateField HeaderText="Comments" ItemStyle-Width="150px">
+                                        <HeaderTemplate>
+                                            <asp:Label ID="lblComments" runat="server" Text="Comments"></asp:Label>
+                                        </HeaderTemplate>
+                                        <ItemTemplate>
+                                            <asp:Label ID="LabelComments" runat="server" Text='<%# Eval("Comments") %>'></asp:Label>
+                                        </ItemTemplate>
+                                        <HeaderStyle HorizontalAlign="Left" />
+                                        <ItemStyle HorizontalAlign="Left" />
+                                    </asp:TemplateField>
+
+                                </Columns>
+                                <EditRowStyle BackColor="#2461BF" />
+                                <FooterStyle BackColor="#507CD1" Font-Bold="True" ForeColor="White" />
+                                <HeaderStyle BackColor="#CCCCCC" Font-Bold="True" ForeColor="White" />
+                                <PagerStyle BackColor="#CCCCCC" Font-Bold="true" Font-Underline="true" ForeColor="White"
+                                    HorizontalAlign="Left" />
+                                <RowStyle BackColor="#EEEEEE" />
+                                <SelectedRowStyle BackColor="#D1DDF1" CssClass="gridSelected" />
+                            </asp:GridView>
+                            <br />
+                            <asp:Button ID="btnCancel" runat="server" Text="Close" Width="100px" CssClass="button" />
+
+
+                        </td>
+                    </tr>
+
+
+                </table>
+            </asp:Panel>
+            <ajax:ModalPopupExtender ID="ModalPopupExtender2" TargetControlID="HiddenField1" PopupControlID="pnlSelection"
+                BackgroundCssClass="overlay_back" DropShadow="false" CancelControlID="btnCancel"
+                runat="server">
+            </ajax:ModalPopupExtender>
+            <asp:HiddenField ID="HiddenField1" runat="server" />
+        </div>
+    </form>
+  
+    <script type="text/javascript" src="<%=Page.ResolveUrl("~/Scripts/bootstrap.min.js")%>"></script>
+    <!-- SmartMenus jQuery plugin -->
+    <script type="text/javascript" src="<%=Page.ResolveUrl("~/Scripts/jquery.smartmenus.js")%>"></script>
+    <!-- SmartMenus jQuery Bootstrap Addon -->
+    <script type="text/javascript" src="<%=Page.ResolveUrl("~/Scripts/jquery.smartmenus.bootstrap.js")%>"></script>
+
+    <!-- code added by Thiru on 30 April, 2015 -->
+    <input type="hidden" id="logoutstat" value="" />
+
+    <script type="text/javascript">
+        var window_focus;
+        $(window).focus(function () {
+            window_focus = true;
+            if (window_focus = true) {
+                var logstat = $('#logoutstat').val();
+                if (logstat === '0') {
+                    //alert('You have logged out!');
+                    window.location = "Login.aspx";
+                }
+                doCheckLoggedOut();
+            }
+        }).blur(function () {
+            window_focus = false;
+        });
+
+        function doCheckLoggedOut() {
+            $.ajax(
+                {
+                    type: "POST",
+                    url: "SearchPatient.aspx/doCheckLoggedOut",
+                    data: "{}",
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    async: true,
+                    cache: false,
+                    success: function (msg) {
+                        var logstat = msg.d;
+                        $('#logoutstat').val(logstat);
+                        var elems = msg.d.toString().split(':');
+                        if (elems[0] === '0' && elems[1] === '1' && elems[2] === '0') { //elems[1] live updatebit
+                            alert('Now you have been Logged out as the System is being upgraded by the System Administrator.');
+                            window.location = "Login.aspx";
+                        }
+                        else if (elems[0] === '0' && elems[1] === '0' && elems[2] === '1') { //elems[2] reset password
+                            alert('You have been force logged out, because your password has been resetted by Administrator.');
+                            window.location = "Login.aspx";
+                        }
+                        else if (elems[0] === '0' && elems[3] === '1') { //elems[4]  Deactivate user Accourt
+                            alert('Now you have been Logged out , as the System Administrator has deactive your account.');
+                            window.location = "Login.aspx";
+                        }
+                        else if (elems[0] === '0') {
+                            alert('You have been force Logged out, as the same user is trying to Log In.');
+                            window.location = "Login.aspx";
+                        }
+                       
+                    },
+                    error: function (x, e) {
+                        // alert("The call to the server side failed. doCheckLoggedOut. " + x.responseText);
+                    }
+                }
+            );
+        }
+    </script>
+</body>
+</html>

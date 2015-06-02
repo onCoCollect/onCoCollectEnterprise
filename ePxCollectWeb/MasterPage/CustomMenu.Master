@@ -1,0 +1,302 @@
+<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="CustomMenu.master.cs" Inherits="ePxCollectWeb.MasterPage.CustomMenu" %>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head id="Head1" runat="server">
+    <title>Onco Collect Web Portal</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+    <!--Style Sheets-->
+    <link rel="stylesheet" type="text/css" href="~/Style/style.css" />
+    <link rel="stylesheet" type="text/css" href="~/Style/menu.css" />
+    <!--JS Files-->
+    <script type="text/javascript" src="~/Scripts/jquery-1.6.4.js" ></script>
+    <script type="text/javascript" src="~/Scripts/jqueryslidemenu.js" ></script>
+    <asp:ContentPlaceHolder ID="HeadContent" runat="server">
+    </asp:ContentPlaceHolder>
+</head>
+<body>
+    <form id="Form1" runat="server" >
+    <div class="container">
+     <script type="text/javascript">
+         function showDisease(strP) {
+
+             var curStyle = document.getElementById(strP).style.display;
+             //if (curStyle == "none") 
+             //alert(strP + ":" + curStyle);
+             document.getElementById("ctl00_divStudy").style.display = "none";
+             document.getElementById("ctl00_divDisease").style.display = "none";
+             document.getElementById("ctl00_divCustom").style.display = "none";
+             document.getElementById("ctl00_divTreatment").style.display = "none";
+             if (curStyle == "none") {
+                 document.getElementById(strP).style.display = "";
+             } else {
+                 document.getElementById("ctl00_divCustom").style.display = "none";
+             }
+         }
+         function fnPopWindow(fName) {
+             //alert(tName);
+             if (window.showModalDialog) {
+
+                 var opt = 'dialogWidth:850px; dialogHeight:230px; center:yes; scroll:no; status:no';
+                 
+                 //window.showModalDialog('Register.aspx', '', opt);
+                 window.showModalDialog(fName, '', opt);
+                 return false;
+                 //                     retVal = window.showModalDialog("NewPatient.aspx", "_blank", "dialogHeight:=200px;dialogWidth:100; left:50,top:10; " +
+                 //                                "location:no; menubar:no; scrollbars:no; titlebar:no; toolbar:no", true);
+             } else {
+                 retVal = window.open("Register.aspx", "_blank", "height:300; width:800; left:50;top:100; " +
+                                "location:no; menubar:no; scrollbars:no; titlebar:no; toolbar:no", true);
+                 return false;
+             }
+         }
+
+
+         function fnPopup(tName, ctlName) {
+             //alert(tName);
+             if (window.showModalDialog) {
+                 retVal = window.showModalDialog("UserControl\\PopupMultiSelect.aspx?tName=" + tName, "_blank", "height=100, width=200, left=150,top=150, " +
+                        "location=no, menubar=no, resizable=no, " + "scrollbars=no, titlebar=no, toolbar=no", true);
+                 //alert(retVal);
+                 try {
+
+                     if (retVal == null) {
+                         document.getElementById(ctlName).value = document.getElementById(ctlName).value;
+                     } else
+                         if (retVal == undefined) {
+                             document.getElementById(ctlName).value = document.getElementById(ctlName).value;
+                         } else
+                             if (retVal != "") {
+                                 document.getElementById(ctlName).value = retVal.toString().replace("undefined", "");
+                             }
+                 }
+                 catch (e) {
+
+                 }
+             }
+             else {
+                 var rtvalue = window.open("UserControl\\PopupMultiSelect.aspx?tName=" + tName, "_blank", "height=200, width=200, left=150,top=150, " +
+                        "location=no, menubar=no, resizable=no, " + "scrollbars=no, titlebar=no, toolbar=no", true);
+                 //alert(rtvalue);
+                 try {
+                     if (retVal != "undefined") {
+                         document.getElementById(ctlName).value = rtvalue.toString().replace("undefined", ""); ;
+                     }
+                     rtvalue.focus();
+                 } catch (e) {
+
+                 }
+                 //                 for (i = 0; i < rtvalue.length; i++) {
+                 //                     alert(rtvalue[i]);
+                 //                 }
+             }
+
+         }
+
+         function fnPopupRightMultiPick(tName, ctlName) {
+             //alert(tName);
+             if (window.showModalDialog) {
+                 retVal = window.showModalDialog("UserControl\\RightMultiPick.aspx?tName=" + tName, "_blank", "height=100, width=200, left=150,top=150, " +
+                        "location=no, menubar=no, resizable=no, " + "scrollbars=no, titlebar=no, toolbar=no", true);
+                 //alert(retVal);
+                 try {
+
+                     if (retVal == null) {
+                         document.getElementById(ctlName).value = document.getElementById(ctlName).value;
+                     } else
+                         if (retVal == undefined) {
+                             document.getElementById(ctlName).value = document.getElementById(ctlName).value;
+                         } else
+                             if (retVal != "") {
+                                 document.getElementById(ctlName).value = retVal.toString().replace("undefined", "");
+                             }
+                 }
+                 catch (e) {
+
+                 }
+             }
+             else {
+                 var rtvalue = window.open("UserControl\\RightMultiPick.aspx?tName=" + tName, "_blank", "height=200, width=200, left=150,top=150, " +
+                        "location=no, menubar=no, resizable=no, " + "scrollbars=no, titlebar=no, toolbar=no", true);
+                 //alert(rtvalue);
+                 try {
+                     if (retVal != "undefined") {
+                         document.getElementById(ctlName).value = rtvalue.toString().replace("undefined", ""); ;
+                     }
+                     rtvalue.focus();
+                 } catch (e) {
+
+                 }
+                 //                 for (i = 0; i < rtvalue.length; i++) {
+                 //                     alert(rtvalue[i]);
+                 //                 }
+             }
+
+         }
+     </script>
+   
+        <div>
+        <a href="~/ProjectForm.aspx">
+            <img src="images/Logo.PNG" width="230px" height="77px" class="leftFloat" alt="Onco Collect" /></a>
+        <div class="welcome">
+            Welcome, Doctor &nbsp; | &nbsp; <a href="../login.aspx"  style="color:white">Logout</a>
+        </div>
+        <!--  TOP NAVIGATION STARTS-->
+        <div id="topnavBar"  class="TopMenuBar">
+            <div id="myslidemenu1" style="padding:5 10 50 20">
+               <%-- <ul>
+                    <li><a href="../ProjectForm.aspx">Home</a></li>
+                    <li><a href="#">Data Analysis</a>
+                        <ul>
+                            <li><a href="#">Status Check List</a></li>
+                            <li><a href="#">Payment Analysis</a>
+                                <ul>
+                                    <li><a href="#">By Diagnosis</a></li>
+                                    <li><a href="#">By Study</a></li>
+                                    <li><a href="#">By All Parameters</a></li>
+                                </ul>
+                            </li>
+                            <li><a href="#">Drug Dosage Analysis</a></li>
+                            <li><a href="#">My Saved Queries</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="#">Customize</a></li>
+                    <li ><a href="#">Data Maintenance</a></li>
+                    <li><a href="#">Study Data</a></li>
+                    <li><a href="#">Help</a></li>
+                    <li><a href="#">Contact Us
+                        </a></li>
+                </ul>--%>
+                <asp:Menu ID="Menu1" runat="server" Orientation="Horizontal" 
+                    RenderingMode="Table"   >
+                    <LevelMenuItemStyles>
+    <asp:MenuItemStyle CssClass="level1"/>
+    <asp:MenuItemStyle CssClass="level2"/>
+    <asp:MenuItemStyle CssClass="level3" />
+   
+  </LevelMenuItemStyles>
+  
+  <StaticHoverStyle CssClass="hoverstyle"/>
+
+                    <Items>
+                        <asp:MenuItem NavigateUrl="../ProjectForm.aspx" Text="Home" Value="Home" >
+                        </asp:MenuItem>
+                        <asp:MenuItem Text="Data Analysis" Value="Data Analysis">
+                            <asp:MenuItem Text="Status Check List" Value="Status Check List"></asp:MenuItem>
+                            <asp:MenuItem Text="Patient Analysis" Value="Patient Analysis">
+                                <asp:MenuItem Text="By Diagnosis" NavigateUrl="../DataAnalysis.aspx?AType=ByDiag" Value="By Diagnosis"></asp:MenuItem>
+                                <asp:MenuItem Text="By Study" NavigateUrl="../DataAnalysis.aspx?AType=ByStudy" Value="By Study"></asp:MenuItem>
+                                <asp:MenuItem Text="By All Parameters" NavigateUrl="../DataAnalysis.aspx?AType=All" Value="By All Parameters"></asp:MenuItem>
+                            </asp:MenuItem>
+                            <asp:MenuItem Text="Drug Dosage Analysis" Value="Drug Dosage Analysis">
+                            </asp:MenuItem>
+                            <asp:MenuItem Text="My Saved Queries" Value="My Saved Queries"></asp:MenuItem>
+                        </asp:MenuItem>
+                        <asp:MenuItem Text="Customize" Value="Customize"></asp:MenuItem>
+                        <asp:MenuItem Text="Live Update" Value="Live Update"></asp:MenuItem>
+                        <asp:MenuItem Text="Export Study Data" Value="Export Study Data"></asp:MenuItem>
+                        <asp:MenuItem Text="Contact US" Value="Contact US"></asp:MenuItem>
+                    </Items>
+                        </asp:Menu>
+            </div>
+        </div>
+        <!-- TOP NAVIGATION ENDS-->
+    </div>
+       
+         
+         <div id="contentMain">
+        <!-- LEFT NAVIGATION STARTS-->
+        <div id="sidebar">
+            <div id="navigation" >
+            <asp:PlaceHolder ID="phMenus" runat="server">            
+           <%-- <asp:Label runat="server" Text="Test menu" class="MainLeftItem"> </asp:Label>
+            <asp:LinkButton runat="server" OnClientClick="javascript:window.location.href('ProjectForm.aspx?Tag=2&ReadOnly=False'); return false;">Register</asp:LinkButton>--%>
+            </asp:PlaceHolder>
+                <ul >
+                    <%--<li><a href="Register.aspx" class="MainLeftItem">Register</a></li>
+                    <li><a href="ProjectForm.aspx?Tag=0" class="MainLeftItem">Demographics</a></li>
+                    <li><a href="ProjectForm.aspx?Tag=2" class="MainLeftItem" >History</a></li>                    
+                    <li><a href="ProjectForm.aspx?Tag=1" class="MainLeftItem">Disease Details</a></li>
+                    <li><a href="ProjectForm.aspx?Tag=4" class="MainLeftItem">Surgery</a></li>
+                    <li><a href="ProjectForm.aspx?Tag=5" class="MainLeftItem">Pathology</a></li>
+                    <li><a href="ProjectForm.aspx?Tag=6" class="MainLeftItem">Radiation</a></li>
+                    <li><a href="ProjectForm.aspx?Tag=3" class="MainLeftItem">R/T Toxicity</a></li>     
+                    <li><a href="OthersPage.aspx" class="MainLeftItem">Others</a></li> --%> 
+                    <%-- <li onclick="showDisease('divTreatment');"><a href="#" class="MainLeftItem">Treatment <img alt=">>" src="images/right.gif" /></a>
+                    
+                                <div  id="divTreatment"  style=" display:none">
+                                    <ol>
+                                        <li><a href="../ProjectForm.aspx?Tag=8" class="IndentItem">First Line</a></li>
+                                        <li><a href="../ProjectForm.aspx?Tag=10" class="IndentItem">Second Line</a></li>
+                                        <li><a href="../ProjectForm.aspx?Tag=11" class="IndentItem">Third Line</a></li>
+                                        <li  ><a href="../ProjectForm.aspx?Tag=12" class="IndentItem">Fourth Line</a></li>
+                                        <li  ><a href="../ProjectForm.aspx?Tag=13" class="IndentItem">Fifth Line</a></li>
+                                    </ol>
+                                </div>
+                        </li>   --%>          
+                   <%-- <li onclick="showDisease('ctl00_divDisease');"><a href="#" class="MainLeftItem">By Diagnosis <img alt=">>" src="images/right.gif" /></a>                    
+                    <div  id="ctl00_divDisease"  style=" display:none">
+                       <ol>
+                            <li  ><a href="#" class="IndentItem">Breast1</a></li>
+                            <li><a href="#" class="IndentItem">Breast2</a></li>
+                            <li><a href="#" class="IndentItem">Breast</a></li>
+                      </ol>
+                     </div></li>
+                     <li onclick="showDisease('ctl00_divStudy');"><a href="#" class="MainLeftItem">By Study <img alt=">>" src="images/right.gif" /></a>
+                    
+                    <div  id="ctl00_divStudy"  style=" display:none">
+                       <ol>
+                            <li  ><a href="#" class="IndentItem">Bladder Study</a></li>
+                            <li><a href="#" class="IndentItem">Breast Ca Study</a></li>
+                            <li><a href="#" class="IndentItem">Colo Rectal Study</a></li>
+                            <li  ><a href="#" class="IndentItem">My Saved Queries</a></li>
+                      </ol>
+                        </div></li>
+                         <li onclick="showDisease('ctl00_divCustom');">
+                            <a href="#" class="MainLeftItem">Custom Configured <img alt=">>" src="images/right.gif" /></a>
+                    
+                                <div  id="ctl00_divCustom"  style=" display:none">
+                                    <ol>
+                                        <li  ><a href="#" class="IndentItem">Status Check List</a></li>
+                                        <li><a href="#" class="IndentItem">Payment Analysis</a></li>
+                                        <li><a href="#" class="IndentItem">Drug Dosage Analysis</a></li>
+                                        <li  ><a href="#" class="IndentItem">My Saved Queries</a></li>
+                                    </ol>
+                                </div>
+                        </li>--%>
+                </ul>
+               <%-- <div id="help">
+                    <div class="helpContent" onclick="window.open('help.html');">
+                        Help</div>
+                </div>--%>
+            </div>
+        </div>
+        <!-- LEFT NAVIGATION ENDS-->
+        <!-- MAIN CONTENT STARTS-->
+        <div id="main">
+           
+            
+            <%--<div id="inside" class="container" >--%>
+                <div class="info" style="min-height:400px">
+                      <asp:ContentPlaceHolder ID="MainContent"  runat="server"/> 
+                </div>
+          <%--  </div>--%>
+        </div>
+        <!-- MAIN CONTENT ENDS-->
+    </div>
+   <div id="footer">
+        <img src="images/img_footer.png" alt="" width="940px" height="11" />
+        <asp:Label ID="lblPatientDetails" runat="server" Font-Bold="True" 
+            Font-Size="12pt" ForeColor="#F78D1D"></asp:Label>
+        <br />
+        DEMO VERSION<ul>
+            <li></li>
+            <li>© OncoCollect. All rights reserved</li>
+        </ul>
+    </div>
+    <!-- FOOTER ENDS-->
+    </div>
+   </form>
+</body>
+</html>

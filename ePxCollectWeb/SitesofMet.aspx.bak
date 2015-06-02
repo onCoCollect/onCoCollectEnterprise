@@ -1,0 +1,50 @@
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterPage/Site.Master" AutoEventWireup="True" CodeBehind="SitesofMet.aspx.cs" Inherits="ePxCollectWeb.SitesofMet" %>
+
+<asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
+</asp:Content>
+<asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
+    <asp:UpdatePanel runat="server" ID="updMet">
+        <ContentTemplate>
+            <table>
+                <tr>
+                    <td valign="top">
+
+                        <div style="float: left">
+                            <%--   <asp:Label ID="sas" runat="server" Text="Lines of Metastasis :" CssClass="lbltext"></asp:Label>--%>
+                            <asp:ListBox ID="LstLines" runat="server" Width="200px" Height="90px"
+                                OnSelectedIndexChanged="LstLines_SelectedIndexChanged" AutoPostBack="true"></asp:ListBox>
+                        </div>
+                    </td>
+                    <td>
+                        <div style="overflow: auto; width: 500px; height: 260px;  border:solid; border-width:1px;" >
+                            <%--Code remodified on March 10-2015,Subhashini--%>
+                            <asp:CheckBoxList ID="LstSitesofMet" runat="server" Enabled="False" CssClass="checkcss" RepeatColumns="2" RepeatDirection="Horizontal" Width="450px">
+                            </asp:CheckBoxList>
+
+                        </div>
+
+                    </td>
+                </tr>
+
+            </table>
+            <div style="text-align: center">
+                <%--Code modified on March 06-2015,Subhashini--%>
+                <asp:Label ID="lblErrorMsg" runat="server" ForeColor="Red" Text=""></asp:Label>
+                <br />
+            </div>
+            <br />
+            <center>
+                <asp:Button ID="btnSave" runat="server" Text="Save" Height="25px" Width="70px"
+                        CssClass="button"
+                onclick="btnSave_Click" />
+                <asp:Button ID="btnReset" runat="server" Text="Reset" Height="25px" Width="70px"
+                        CssClass="button" OnClick="btnReset_Click" />
+                <asp:Button ID="btnClose" runat="server" Text="Close" Height="25px" Width="70px"
+                        CssClass="button" onclick="btnClose_Click" 
+                 />
+                </center>
+            <br />
+
+        </ContentTemplate>
+    </asp:UpdatePanel>
+</asp:Content>
