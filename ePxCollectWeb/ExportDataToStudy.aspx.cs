@@ -205,9 +205,12 @@ namespace ePxCollectWeb
                         string StrPatientId = "";
                         if (Convert.ToString(Session["PatientID"]) != string.Empty)
                             StrPatientId = "'" + Convert.ToString(Session["PatientID"]) + "'";
-                        if (AllPatientField != string.Empty && StudyPatientsList != StrPatientId && ViewState["Count"].ToString() == "0")
+                        if (StudyPatientsList != StrPatientId && ViewState["Count"].ToString() == "0")
                         {
-                            Query = "Delete from PatientDetails_0 where PatientID in (" + StudyPatientsList + ") and StudyCode='" + StudyCode + "'";
+                            if (StudyPatientsList == string.Empty)
+                                Query = "Delete from PatientDetails_0 where  StudyCode='" + StudyCode + "'";
+                            else
+                                Query = "Delete from PatientDetails_0 where PatientID in (" + StudyPatientsList + ") and StudyCode='" + StudyCode + "'";
                             SqlCommand cmd = new SqlCommand(Query, cn);
                             cmd.ExecuteNonQuery();
                         }
