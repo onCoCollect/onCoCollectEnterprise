@@ -136,6 +136,7 @@
     <Content Include="ePxCollectWeb.Publish.xml" />
     <Content Include="ErrorReport.aspx" />
     <Content Include="FieldValueSelectiveSingle.aspx" />
+    <Content Include="githubtest.html" />
     <Content Include="images\Attachment.png" />
     <Content Include="images\cross.png" />
     <Content Include="images\expandleft.gif" />
@@ -551,7 +552,6 @@
     </Compile>
     <Compile Include="bin\Admin.Master.cs">
       <DependentUpon>Admin.Master</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="bin\Admin.Master.designer.cs">
       <DependentUpon>Admin.Master</DependentUpon>
