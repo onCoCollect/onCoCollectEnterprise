@@ -1972,10 +1972,12 @@
     <div id="onCoRightPickDiag" title="Select" style="display:none;">
         <iframe id="onCoRightPickDiag_iframe" src="UserControl/PopupMultiSelect.aspx" height="400px" width="100%"></iframe>
     </div>
-    <!-- SmartMenus jQuery Bootstrap Addon -->
-    <script type="text/javascript" src="<%=Page.ResolveUrl("~/Scripts/jquery.smartmenus.bootstrap.js")%>"></script>
+
+    <script type="text/javascript" src="<%=Page.ResolveUrl("~/Scripts/bootstrap.min.js")%>"></script>
     <!-- SmartMenus jQuery plugin -->
     <script type="text/javascript" src="<%=Page.ResolveUrl("~/Scripts/jquery.smartmenus.js")%>"></script>
+    <!-- SmartMenus jQuery Bootstrap Addon -->
+    <script type="text/javascript" src="<%=Page.ResolveUrl("~/Scripts/jquery.smartmenus.bootstrap.js")%>"></script>
     <script type="text/javascript" src="<%= Page.ResolveUrl("~/Scripts/jquery-ui-1.11.2.custom/jquery-ui.min.js")%>"></script>
     <script type="text/javascript" src="<%= Page.ResolveUrl("~/onCoAlert/alertify.min.js")%>"></script>
 </body>
