@@ -73,7 +73,7 @@
     </Reference>
     <Reference Include="DropDownCheckBoxes, Version=1.1.0.40567, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\DropDownCheckBoxes\bin\Debug\DropDownCheckBoxes.dll</HintPath>
+      <HintPath>..\..\..\thiru\OncoCollectEnterprise Responsive\OncoCollectEnterprise\OncoCollectEnterprise\bin\DropDownCheckBoxes.dll</HintPath>
     </Reference>
     <Reference Include="hmlib.Web, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -102,7 +102,7 @@
     </Reference>
     <Reference Include="OncoDataAccess, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\OncoCollectEnterpriseAdmin\ePxCollectDataAccess\bin\Debug\OncoDataAccess.dll</HintPath>
+      <HintPath>..\ePxCollectDataAccess\bin\Debug\OncoDataAccess.dll</HintPath>
     </Reference>
     <Reference Include="Quartz">
       <HintPath>..\packages\Quartz.2.3.1\lib\net40\Quartz.dll</HintPath>
@@ -152,8 +152,6 @@
     <Content Include="PickPatient.aspx" />
     <Content Include="RedirectLoginPage.aspx" />
     <Content Include="ExportDataToStudy.aspx" />
-    <Content Include="bin\DataImportLib.dll" />
-    <Content Include="bin\DataImportLib.pdb" />
     <Content Include="bin\DatePickerControl.dll" />
     <Content Include="bin\DatePickerControl.pdb" />
     <Content Include="bin\hmlib.Web.dll" />
@@ -192,8 +190,6 @@
     <Content Include="bin\ru\Microsoft.Data.Edm.resources.dll" />
     <Content Include="bin\ru\Microsoft.Data.OData.resources.dll" />
     <Content Include="bin\ru\System.Spatial.resources.dll" />
-    <Content Include="bin\SlimeeLibrary.dll" />
-    <Content Include="bin\SlimeeLibrary.pdb" />
     <Content Include="bin\zh-Hans\Microsoft.Data.Edm.resources.dll" />
     <Content Include="bin\zh-Hans\Microsoft.Data.OData.resources.dll" />
     <Content Include="bin\zh-Hans\System.Spatial.resources.dll" />
@@ -276,7 +272,6 @@
     <Content Include="Style\bootstrap.js" />
     <Content Include="Style\bootstrap.min.js" />
     <Content Include="UnderConstruction.aspx" />
-    <Content Include="NewPatient.aspx" />
     <Content Include="obj\Debug\ePxCollectWeb.csproj.FileListAbsolute.txt" />
     <Content Include="obj\Debug\ePxCollectWeb.dll" />
     <Content Include="obj\Debug\ePxCollectWeb.pdb" />
@@ -550,12 +545,6 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="bin\Admin.Master.cs">
-      <DependentUpon>Admin.Master</DependentUpon>
-    </Compile>
-    <Compile Include="bin\Admin.Master.designer.cs">
-      <DependentUpon>Admin.Master</DependentUpon>
-    </Compile>
     <Compile Include="MasterPage\CustomMenu.Master.cs">
       <DependentUpon>CustomMenu.Master</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -643,16 +632,6 @@
       <DependentUpon>UnderConstruction.aspx</DependentUpon>
     </Compile>
     <Compile Include="MathExtensions.cs" />
-    <Compile Include="NewPatient.aspx.cs">
-      <DependentUpon>NewPatient.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="NewPatient.aspx.designer.cs">
-      <DependentUpon>NewPatient.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="obj\Debug\TemporaryGeneratedFile_036C0B5B-1481-4323-8D20-8F5ADCB23D92.cs" />
-    <Compile Include="obj\Debug\TemporaryGeneratedFile_5937a670-0e60-4077-877b-f7221da3dda1.cs" />
-    <Compile Include="obj\Debug\TemporaryGeneratedFile_E7A71F73-0F8D-4B9B-B56E-8E70B10BC5D3.cs" />
     <Compile Include="OthersPage.aspx.cs">
       <DependentUpon>OthersPage.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -835,7 +814,6 @@
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="bin\Admin.Master" />
     <Content Include="MasterPage\CustomMenu.Master" />
     <Content Include="MasterPage\epxWebEmpty.Master" />
     <Content Include="MasterPage\Site.Master" />

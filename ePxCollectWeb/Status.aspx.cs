@@ -330,18 +330,6 @@ namespace ePxCollectWeb
             }
         }
 
-        protected void dtStatusDate_DateChanged(object sender, DatePickerControl.DateChangedEventArgs e)
-        {
-            lblErrorMsg.Text = "";
-            //txtStatusDate.Text = dtStatusDate.CalendarDateString.ToString();
-        }
-
-        protected void dtDOD_DateChanged(object sender, DatePickerControl.DateChangedEventArgs e)
-        {
-            lblErrorMsg.Text = "";
-            //txtDOD.Text = dtDOD.CalendarDateString.ToString();
-        }
-
         protected void cboCauseofDeath_SelectedIndexChanged(object sender, EventArgs e)
         {
             lblErrorMsg.Text = "";

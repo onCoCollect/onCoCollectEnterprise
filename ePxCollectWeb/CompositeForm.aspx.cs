@@ -121,20 +121,20 @@ namespace ePxCollectWeb
                             else
                                 if ((string)dr[0]["DataType"] == "DATE")
                                 {
-                                    DatePickerControl.DatePicker dtP = new DatePickerControl.DatePicker();
+                                    TextBox dtP = new TextBox();
 
                                     dtP.ID = dcValues.ColumnName.Replace(" ", "_-") + "_DT_Y";
                                     dtP.Width = Unit.Pixel(198);
                                     dtP.Height = 30;//"images/Calendar.png"
-                                    dtP.TextCssClass = "dynamictext";
-                                    dtP.LabelHeaderText = lbCtl.Text.Replace(":", "").Trim();
+                                    dtP.CssClass = "dynamictext";
+                                    //dtP.LabelHeaderText = lbCtl.Text.Replace(":", "").Trim();
                                     if (strFldVal.ToString() != "")
                                     {
-                                        dtP.CalendarDate = Convert.ToDateTime(strFldVal.ToString());
+                                        dtP.Text = strFldVal.ToString();
                                     }
                                     else
                                     {
-                                        dtP.CalendarDate = DateTime.Today;
+                                        dtP.Text = DateTime.Now.ToString();
                                     }
                                     phProject.Controls.Add(dtP);
 
@@ -411,9 +411,9 @@ namespace ePxCollectWeb
                             else
                                 if (ctl.ID.ToString().EndsWith("_DT_Y"))
                                 {
-                                    DatePickerControl.DatePicker dtP = new DatePickerControl.DatePicker();
-                                    dtP = (DatePickerControl.DatePicker)ctl;
-                                    strColVal = "'" + dtP.CalendarDateString.ToString() + "'";
+                                    TextBox dtP = new TextBox();
+                                    dtP = (TextBox)ctl;
+                                    strColVal = "'" + dtP.Text + "'";
                                     TextBox txtCtl = new TextBox();
                                     txtCtl = (TextBox)ctl;
                                     strColVal = "'" + txtCtl.Text.ToString() + "'";
