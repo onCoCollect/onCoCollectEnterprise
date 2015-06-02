@@ -223,16 +223,14 @@
                                 </td>
                                 <td align="left">
 
-                                    <asp:TextBox ID="txtUserId" runat="server" CssClass="dynamictext" MaxLength="10"></asp:TextBox>
-                                    <span style="color: red">*</span>
+                                    <asp:TextBox ID="txtUserId" runat="server" CssClass="dynamictext" MaxLength="10" TabIndex="1"></asp:TextBox><span style="color: red">*</span>
                                 </td>
                             </tr>
                             <tr>
                                 <td align="right" class="NewLabelRight">Security Question&nbsp;
                                 </td>
                                 <td align="left">
-                                    <asp:DropDownList ID="ddlPasswordHintQuestion" runat="server" TabIndex="4" Width="200px" CssClass="dllCss"
-                                        AutoPostBack="True">
+                                    <asp:DropDownList ID="ddlPasswordHintQuestion" runat="server" TabIndex="2" Width="205px" CssClass="dllCss">
                                     </asp:DropDownList><span style="color: red">*</span>
 
                                 </td>
@@ -241,7 +239,7 @@
                                 <td align="right" class="NewLabelRight">Answer&nbsp;
                                 </td>
                                 <td align="left">
-                                    <asp:TextBox ID="txtAnswer" runat="server" TabIndex="5" MaxLength="20" Width="200px" CssClass="dynamictext"></asp:TextBox><span style="color: red">*</span>
+                                    <asp:TextBox ID="txtAnswer" runat="server" TabIndex="3" MaxLength="20" Width="200px" CssClass="dynamictext"></asp:TextBox><span style="color: red">*</span>
                                     <ajax:FilteredTextBoxExtender ID="FilteredTextBoxExtender2" runat="server" TargetControlID="txtAnswer"
                                         FilterType="numbers,lowercaseLetters,UppercaseLetters,Custom" ValidChars=".-_!@#$%^&*()<> " />
                                 </td>
@@ -251,13 +249,12 @@
                                      <div id="divChangePassword" runat="server" visible="false" >
                             <table align="center" width="100%">
                                 <tr>
-                                    <td align="right" width="32.5%" class="NewLabelRight">New Password&nbsp;
+                                    <td align="right" width="32.8%" class="NewLabelRight">New Password&nbsp;
                                     </td>
                                     <td align="left">
                                        
-                                        <asp:TextBox ID="txtNewPassword" runat="server" TabIndex="2" MaxLength="15" CssClass="dynamictextpwd" TextMode="Password"
-                                            Width="200px"></asp:TextBox>
-                                        <span style="color: red">*</span>
+                                        <asp:TextBox ID="txtNewPassword" runat="server" TabIndex="4" MaxLength="15" CssClass="dynamictextpwd" TextMode="Password"
+                                            Width="200px"></asp:TextBox><span style="color: red">*</span>
                                         <ajax:FilteredTextBoxExtender ID="fteNewPassword" runat="server" TargetControlID="txtNewPassword"
                                             FilterType="lowercaseLetters,UppercaseLetters,numbers,Custom" ValidChars=".-_!@#$%^&*()<>" />
                                     </td>
@@ -267,8 +264,7 @@
                                     </td>
                                     <td align="left">
                                         <asp:TextBox ID="txtConfirmPassword" runat="server" Width="200px" CssClass="dynamictextpwd" TextMode="Password"
-                                            TabIndex="3" MaxLength="15"></asp:TextBox>
-                                        <span style="color: red">*</span>
+                                            TabIndex="5" MaxLength="15"></asp:TextBox><span style="color: red">*</span>
                                         <ajax:FilteredTextBoxExtender ID="FilteredTextBoxExtender4" runat="server" TargetControlID="txtConfirmPassword"
                                             FilterType="lowercaseLetters,UppercaseLetters,numbers,Custom" ValidChars=".-_!@#$%^&*()<>" />
                                     </td>
@@ -285,9 +281,9 @@
                             </tr>
                             <tr>
                                 <td colspan="2" align="center">
-                                    <asp:Button ID="btnNewPassword" runat="server" Text="Submit" Width="100px" OnClick="btnNewPassword_Click" CssClass="button" />
+                                    <asp:Button ID="btnNewPassword" runat="server" Text="Submit" Width="100px" OnClick="btnNewPassword_Click" CssClass="button" TabIndex="6" />
                                     &nbsp;
-                                   <asp:Button ID="btncancel" runat="server" Text="Cancel" Width="100px" OnClick="btncancel_Click" CssClass="button" />
+                                   <asp:Button ID="btncancel" runat="server" Text="Cancel" Width="100px" OnClick="btncancel_Click" CssClass="button" TabIndex="7" />
                                <asp:HiddenField ID="hdnUserId" runat="server" />
                                      </td>
                             </tr>
@@ -312,7 +308,7 @@
                     </div>
                 </div>
             </div>
-            <div style="height: 320px;"></div>
+            <div style="height: 270px;" id="divHeight" runat="server"></div>
             <div class="footer noborder">
                 Best viewed with Internet Explorer <span>All rights Reserved OncoCollect Enterprise<sup>TM</sup></span><%--Code modified on March 17-2015,Subhashini--%>
             </div>

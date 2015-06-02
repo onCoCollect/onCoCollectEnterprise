@@ -42,8 +42,6 @@ namespace ePxCollectWeb
 
         #region Events
 
-
-
         public void BindPasswordHintQuestions()
         {
             dsChangePassword = SqlHelper.ExecuteDataset(strConns, CommandType.Text, "select *  from [PasswordHintQuestion]");
@@ -83,14 +81,20 @@ namespace ePxCollectWeb
             return strmsg;
         }
 
-
-
         protected void btnNewPassword_Click(object sender, EventArgs e)
         {
             if (divChangePassword.Visible == true)
             {
                 if (txtConfirmPassword.Text.Trim() != string.Empty && txtNewPassword.Text.Trim() != string.Empty)
                 {
+                    if (txtConfirmPassword.Text.Trim().ToLower() != txtNewPassword.Text.Trim().ToLower())
+                    {
+                        txtUserId.Enabled = false;
+                        ddlPasswordHintQuestion.Enabled = false;
+                        txtAnswer.Enabled = false;
+                        lblMessage.Text = "New password should match with confirm password.";
+                        return;
+                    }
                     //SqlHelper.ExecuteNonQuery(strConns, CommandType.Text, "update [HospitalUsers] set [Password] = '" + objEncryptDecrypt.Encrypt(txtNewPassword.Text.Trim()) + "' where [UserID] = '" + hdnUserId.Value + "' ");
                     GlobalValues.ForgotPassword(objEncryptDecrypt.Encrypt(txtNewPassword.Text.Trim()), hdnUserId.Value);
 
